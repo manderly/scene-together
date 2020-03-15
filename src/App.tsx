@@ -2,8 +2,8 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import Actors from './features/actors/Actors';
-import Header from './shared/containers/header/Header';
+import Actors from 'features/actors/Actors';
+import Header from 'shared/containers/header/Header';
 
 function App() {
   return (
