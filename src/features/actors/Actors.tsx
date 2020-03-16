@@ -44,7 +44,7 @@ const Actors: React.FC = () => {  // functional component
 					</Grid>
 				</Grid>
 
-				<Button variant="contained" color="primary">Find actors in common!</Button> 
+				<Button variant="contained" color="primary">Find shows in common!</Button> 
 			</form>
 		</div>
 	);

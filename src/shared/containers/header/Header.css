@@ -2,3 +2,8 @@
   background-color: #FDD835;
   color: #fff;
 }
+
+.app-header-link-list li {
+    display: inline;
+    padding-left:20px;
+  }

@@ -28,20 +28,24 @@ const Header: React.FC = () => {
   return (
     <AppBar position="static" color="primary">
       <Toolbar>
-      <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-        <MenuIcon />
-        </IconButton>
+
         <Typography variant="h6" className={classes.title}>
           Actors in Common
         </Typography>
 
-        <Link href="/search-by-actors" color="secondary">
-          Search by actors
-        </Link>
+        <ul className="app-header-link-list">
+          <li>
+            <Link href="/actors" color="secondary">
+              Search by actors
+            </Link>
+          </li>
 
-        <Link href="/search-by-shows" color="secondary">
-          Search by shows
-        </Link>
+          <li>
+            <Link href="/shows" color="secondary">
+              Search by shows
+            </Link>
+          </li>
+        </ul>
 
       </Toolbar>
     </AppBar>

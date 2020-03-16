@@ -6,3 +6,5 @@ const Shows: React.FC = () => {  // functional component
 		<div>Search by Shows</div>
   );
 }
+
+export default Shows;
