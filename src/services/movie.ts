@@ -1,6 +1,6 @@
 import { getAPI } from "./api"
 
-export const findMovie = async (actorIDs: number[]) => {
+export const findMovie = async (actorIDs: number[] = []) => {
     const params = {
         'with_people':actorIDs.join(','),
         'sort_by':'vote_average.desc'
