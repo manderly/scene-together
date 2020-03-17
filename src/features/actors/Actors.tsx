@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -11,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 
 import MediaTypeCheckbox from 'shared/components/MediaTypeCheckbox';
 import { Typography } from '@material-ui/core';
+import { findMovie } from 'services/movie';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,6 +30,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
+
+const submitQuery = async () => {
+	console.log("clicked button");
+	console.log(await findMovie())
+}
 
 const Actors: React.FC = () => {  // functional component 
 	const classes = useStyles();
@@ -57,7 +64,7 @@ const Actors: React.FC = () => {  // functional component
 			<form className={classes.root} noValidate autoComplete="off">
 
 				{/* Instructions */}
-				<Grid container xs={12} spacing={4} alignItems="center">
+				<Grid container spacing={4} alignItems="center">
 					<Grid item xs={2}></Grid>
 					<Grid item xs={8}>
 					<Typography>Enter the names of two actors to find out what films they've worked on together.</Typography>
@@ -66,7 +73,7 @@ const Actors: React.FC = () => {  // functional component
 				</Grid>
 
 				{/* Actor search fields */}
-				<Grid container xs={12} spacing={4} alignItems="center">
+				<Grid container spacing={4} alignItems="center">
 
 					<Grid item xs={2}></Grid>
 
@@ -95,7 +102,7 @@ const Actors: React.FC = () => {  // functional component
 				</Grid>
 
 				{/* Search filter fields */}
-				<Grid container xs={12} spacing={4} alignItems="center">
+				<Grid container spacing={4} alignItems="center">
 					<Grid item xs={2}></Grid>
 
 					<Grid item xs={8}>
@@ -129,7 +136,7 @@ const Actors: React.FC = () => {  // functional component
 						</Grid>
 
 						<Grid item>
-							<Button variant="contained" color="primary" size="large">Find shows in common!</Button>
+							<Button variant="contained" color="primary" size="large" onClick={submitQuery}>Find shows in common!</Button>
 						</Grid>
 					</Grid>
 

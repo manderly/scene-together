@@ -29,6 +29,7 @@ const darkTheme = createMuiTheme({
 });
 
 function App() {
+  console.log(process.env.REACT_APP_API_KEY_TMDB)
   return (
     <Router>
       <div className="App">
