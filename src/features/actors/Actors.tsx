@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const submitQuery = async () => {
 	console.log("clicked button");
-	console.log(await findMovie())
+	console.log(await findMovie([287, 819]))
 }
 
 const Actors: React.FC = () => {  // functional component 
