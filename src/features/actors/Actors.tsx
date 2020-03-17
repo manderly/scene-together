@@ -10,6 +10,7 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 
 import MediaTypeCheckbox from 'shared/components/MediaTypeCheckbox';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,58 +55,86 @@ const Actors: React.FC = () => {  // functional component
   return (
 		<div>
 			<form className={classes.root} noValidate autoComplete="off">
-				<Grid container md={8} spacing={6} alignItems="center">
 
-					{/*  Left field */}
-					<Grid item xs={12}>
+				{/* Instructions */}
+				<Grid container xs={12} spacing={4} alignItems="center">
+					<Grid item xs={2}></Grid>
+					<Grid item xs={8}>
+					<Typography>Enter the names of two actors to find out what films they've worked on together.</Typography>
+					</Grid>
+					<Grid item xs={2}></Grid>
+				</Grid>
+
+				{/* Actor search fields */}
+				<Grid container xs={12} spacing={4} alignItems="center">
+
+					<Grid item xs={2}></Grid>
+
+					<Grid item xs={4}>
 						<TextField 
 							id="form-field-1" 
 							variant="filled"
 							fullWidth
-							label="Actor" 
+							label="Actor name..." 
 							color="secondary" 
 							placeholder="Actor name"/>
 					</Grid>
 
 					{/* Right field */}
-					<Grid item xs={12}>
+					<Grid item xs={4}>
 						<TextField 
 							id="form-field-2"
 							variant="filled" 
 							fullWidth 
-							label="Another actor name" 
+							label="Another actor name..." 
 							color="secondary"
 							placeholder="Another actor name"/>
 					</Grid>
-				
-					<Grid item xs={12}>
+
+					<Grid item xs={2}></Grid>
+				</Grid>
+
+				{/* Search filter fields */}
+				<Grid container xs={12} spacing={4} alignItems="center">
+					<Grid item xs={2}></Grid>
+
+					<Grid item xs={8}>
 						<InputLabel shrink id="yearCutoff-select-label">
 							Only include shows from the past...
 						</InputLabel>
 
-						<Select
-							labelId="yearCutoff-select-label"
-							id="yearCutoff-select"
-							value={yearCutoff}
-							onChange={handleChange}
-							displayEmpty
-							className={classes.selectEmpty}
-							labelWidth={labelWidth}
-						>
-							<option value="">All years</option>
-							<option value={5}>5 years</option>
-							<option value={15}>15 years</option>
-							<option value={30}>30 years</option>
-						</Select>
+						<FormControl style={{minWidth: 220, marginRight: 50}}>
+							<Select
+								labelId="yearCutoff-select-label"
+								id="yearCutoff-select"
+								value={yearCutoff}
+								onChange={handleChange}
+								displayEmpty
+								className={classes.selectEmpty}
+								labelWidth={labelWidth}
+							>
+								<option value="">All years</option>
+								<option value={5}>5 years</option>
+								<option value={15}>15 years</option>
+								<option value={30}>30 years</option>
+							</Select>
+						</FormControl>
 
-						<MediaTypeCheckbox checked={includeTV} onChange={toggleTVCheckbox} label="TV shows" />
-						<MediaTypeCheckbox checked={includeMovies} onChange={toggleMoviesCheckbox} label="Movies" />
+						<Grid item>
+							<MediaTypeCheckbox checked={includeTV} onChange={toggleTVCheckbox} label="TV shows" />
+						</Grid>
 
+						<Grid item>
+							<MediaTypeCheckbox checked={includeMovies} onChange={toggleMoviesCheckbox} label="Movies" />
+						</Grid>
+
+						<Grid item>
+							<Button variant="contained" color="primary" size="large">Find shows in common!</Button>
+						</Grid>
 					</Grid>
 
-					<Grid item xs={12}>
-						<Button variant="contained" color="primary">Find shows in common!</Button>
-					</Grid>
+					<Grid item xs={2}></Grid>
+
 				</Grid>
  
 			</form>

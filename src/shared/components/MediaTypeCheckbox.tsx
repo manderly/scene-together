@@ -1,4 +1,5 @@
 import React from 'react';
+import { Checkbox, FormControlLabel } from '@material-ui/core';
 
 // https://dev.to/pretaporter/typescript-simple-react-components-occ
 
@@ -13,11 +14,12 @@ interface IMediaTypeCheckbox {
 // functional component of the type "IMediaTypeChecbox"
 const MediaTypeCheckbox: React.FC<IMediaTypeCheckbox> = ({ children, onChange, label, checked = false }) => {
   return (
-    <>   {/* Empty tag so it returns one node */}
-      <label>{label}</label>
-      <input 
-        type='checkbox' onChange={e => onChange(e.target.checked)} checked={checked}/>
-    </>
+      <FormControlLabel
+        value={checked}
+        control={<Checkbox color="secondary" onChange={e => onChange(e.target.checked)} checked={checked}/>}
+        label={label}
+        labelPlacement="end"
+      />
   );
 }
 
