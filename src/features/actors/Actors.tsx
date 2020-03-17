@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 
 import MediaTypeCheckbox from 'shared/components/MediaTypeCheckbox';
-import { Typography } from '@material-ui/core';
+import { Typography, ListItemText } from '@material-ui/core';
 import { findMoviesInCommon } from 'services/movie';
+import { findActorByName } from 'services/actor';
+import { IMovie, IMovieResult } from 'shared/models/movie.model';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,20 +34,40 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
+function generateMovieResults(results: IMovieResult[]) {
+		return results.map((result: IMovieResult, index: number) => {
+			return (
+				<ListItem>
+					<ListItemText
+						key={index}
+						primary={result.title}
+						secondary={result.release_date}
+						/>
+				</ListItem>
+			)
+		});
+}
 
 const Actors: React.FC = () => {  // functional component 
 	const classes = useStyles();
 
-	const [yearCutoff, setYearCutoff] = React.useState('');
-	const [includeTV, setIncludeTV] = React.useState(true);
-	const [includeMovies, setIncludeMovies] = React.useState(true);
+	const [movieResults, setMovieResults] = useState<IMovie | null>(null);
+	const [yearCutoff, setYearCutoff] = useState('');
+	const [includeTV, setIncludeTV] = useState(true);
+	const [includeMovies, setIncludeMovies] = useState(true);
 
   const inputLabel = React.useRef<HTMLLabelElement>(null);
 	const [labelWidth, setLabelWidth] = React.useState(0);
 	
 	const submitQuery = async () => {
-		const movies = await findMoviesInCommon([287, 819]);
-		console.log(movies);
+		const actor1 = await findActorByName("Johnny Depp");
+		var actorID1 = actor1.results[0]['id'];
+
+		const actor2 = await findActorByName("Helena Bonham Carter");
+		var actorID2 = actor2.results[0]['id'];
+
+		const movies = await findMoviesInCommon([actorID1, actorID2]); //287, 819
+		setMovieResults(movies);
 	}
 
 	const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -60,11 +82,9 @@ const Actors: React.FC = () => {  // functional component
 		setIncludeMovies(checked);
 	};
 
-
   return (
 		<div>
 			<form className={classes.root} noValidate autoComplete="off">
-
 				{/* Instructions */}
 				<Grid container spacing={4} alignItems="center">
 					<Grid item xs={2}></Grid>
@@ -147,6 +167,22 @@ const Actors: React.FC = () => {  // functional component
 				</Grid>
  
 			</form>
+
+			{/* only show this section once movieResults has data */}
+			{movieResults && 
+				<Grid container alignItems="center">
+					<Grid item xs={12}>
+						{/* Title varies with filters */}
+						<Typography variant="h3">
+							Movies
+						</Typography>
+
+						{generateMovieResults(movieResults.results)}
+
+					</Grid>
+				</Grid>
+			}
+
 		</div>
 	);
 }
