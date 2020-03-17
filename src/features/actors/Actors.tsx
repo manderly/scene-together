@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 
 import MediaTypeCheckbox from 'shared/components/MediaTypeCheckbox';
 import { Typography } from '@material-ui/core';
-import { findMovie } from 'services/movie';
+import { findMoviesInCommon } from 'services/movie';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,10 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const submitQuery = async () => {
-	console.log("clicked button");
-	console.log(await findMovie([287, 819]))
-}
+
 
 const Actors: React.FC = () => {  // functional component 
 	const classes = useStyles();
@@ -44,7 +41,12 @@ const Actors: React.FC = () => {  // functional component
 	const [includeMovies, setIncludeMovies] = React.useState(true);
 
   const inputLabel = React.useRef<HTMLLabelElement>(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
+	const [labelWidth, setLabelWidth] = React.useState(0);
+	
+	const submitQuery = async () => {
+		const movies = await findMoviesInCommon([287, 819]);
+		console.log(movies);
+	}
 
 	const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setYearCutoff(event.target.value as string);

@@ -1,6 +1,7 @@
 import { getAPI } from "./api"
+import { IMovie } from 'shared/models/movie.model';
 
-export const findMovie = async (actorIDs: number[] = []) => {
+export const findMoviesInCommon = async (actorIDs: number[] = []): Promise<IMovie> => {
     const params = {
         'with_people':actorIDs.join(','),
         'sort_by':'vote_average.desc'
