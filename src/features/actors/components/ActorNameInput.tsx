@@ -50,13 +50,14 @@ interface IActorNameInput {
     handleChange: (value: any) => void;
     label: string;
     exampleName: string;
+    setActorID: (id: number) => void;
 }
 
 function assembleHelptext(exampleName: string) {
   return `ex: "${exampleName}"`;
 };
 
-const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, label, exampleName }) => {
+const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, label, exampleName, setActorID }) => {
 //export default function Asynchronous() {
   const [userInput, setUserInput] = React.useState('');
   const [open, setOpen] = React.useState(false);
@@ -109,12 +110,15 @@ const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, lab
           setOpen(true);
         }
       }}
+      onChange={(event: object, value: any, reason: string) => {
+        // calls the method that was passed in from Actors.tsx to set Actor ID in Actors.tsx's state
+        setActorID(value.id)
+      }}
       onClose={() => {
         setUserInput('');
         setOpen(false);
       }}
       getOptionSelected={(option, value) => {
-        console.log(value);
         return option.name === value.name
       }}
       getOptionLabel={option => option.name}

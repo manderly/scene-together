@@ -15,11 +15,10 @@ const ResultsList: React.FC<IResultsList> = ({ results }) => {
       {
         results.map((result: IMovieResult, index: number) => {
           return (
-            <ListItem>
+            <ListItem key={index}>
               <ListItemText
-              key={index}
-              primary={result.title}
-              secondary={result.release_date}
+                primary={result.title}
+                secondary={result.release_date}
               />
             </ListItem>
           )
