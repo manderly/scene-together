@@ -3,18 +3,19 @@ import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 
 import MediaTypeCheckbox from 'shared/components/MediaTypeCheckbox';
+import ResultsList from 'features/actors/components/ResultsList';
+
 import { Typography, ListItemText } from '@material-ui/core';
 import { findMoviesInCommon } from 'services/movie';
 import { findActorByName } from 'services/actor';
 import { IMovie, IMovieResult } from 'shared/models/movie.model';
+import ActorNameInput from './components/ActorNameInput';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,19 +35,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-function generateMovieResults(results: IMovieResult[]) {
-		return results.map((result: IMovieResult, index: number) => {
-			return (
-				<ListItem>
-					<ListItemText
-						key={index}
-						primary={result.title}
-						secondary={result.release_date}
-						/>
-				</ListItem>
-			)
-		});
-}
 
 const Actors: React.FC = () => {  // functional component 
 	const classes = useStyles();
@@ -55,9 +43,8 @@ const Actors: React.FC = () => {  // functional component
 	const [yearCutoff, setYearCutoff] = useState('');
 	const [includeTV, setIncludeTV] = useState(true);
 	const [includeMovies, setIncludeMovies] = useState(true);
-
-  const inputLabel = React.useRef<HTMLLabelElement>(null);
-	const [labelWidth, setLabelWidth] = React.useState(0);
+	const [labelWidth, setLabelWidth] = useState(0);
+	const [actorName, setActorName] = useState('');
 	
 	const submitQuery = async () => {
 		const actor1 = await findActorByName("Johnny Depp");
@@ -82,6 +69,12 @@ const Actors: React.FC = () => {  // functional component
 		setIncludeMovies(checked);
 	};
 
+	const inputActorName = (event: any) => {
+		console.log(event)
+		setActorName(event.target.value);
+	};
+
+
   return (
 		<div>
 			<form className={classes.root} noValidate autoComplete="off">
@@ -89,6 +82,10 @@ const Actors: React.FC = () => {  // functional component
 				<Grid container spacing={4} alignItems="center">
 					<Grid item xs={2}></Grid>
 					<Grid item xs={8}>
+					<Typography variant="h5">
+							Search by actor names
+						</Typography>
+
 					<Typography>Enter the names of two actors to find out what films they've worked on together.</Typography>
 					</Grid>
 					<Grid item xs={2}></Grid>
@@ -100,13 +97,11 @@ const Actors: React.FC = () => {  // functional component
 					<Grid item xs={2}></Grid>
 
 					<Grid item xs={4}>
-						<TextField 
-							id="form-field-1" 
-							variant="filled"
-							fullWidth
-							label="Actor name..." 
-							color="secondary" 
-							placeholder="Actor name"/>
+						<ActorNameInput 
+							id="actor-name-input-1" 
+							name={actorName}
+							handleChange={inputActorName}
+						/>
 					</Grid>
 
 					{/* Right field */}
@@ -165,21 +160,24 @@ const Actors: React.FC = () => {  // functional component
 					<Grid item xs={2}></Grid>
 
 				</Grid>
- 
 			</form>
 
 			{/* only show this section once movieResults has data */}
 			{movieResults && 
-				<Grid container alignItems="center">
-					<Grid item xs={12}>
+				<Grid container spacing={4} alignItems="center">
+					<Grid item xs={2}></Grid>
+
+					<Grid item xs={8}>
 						{/* Title varies with filters */}
-						<Typography variant="h3">
-							Movies
+						<Typography variant="h5">
+							Shows in common
 						</Typography>
 
-						{generateMovieResults(movieResults.results)}
+						<ResultsList results={movieResults.results} />
 
 					</Grid>
+
+					<Grid item xs={2}></Grid>
 				</Grid>
 			}
 
