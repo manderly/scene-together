@@ -67,10 +67,12 @@ const Actors: React.FC = () => {  // functional component
 
 	const inputActorName1 = (event: any) => {
 		setActorName1(event.target.value);
+		console.log(event.target.value);
 	};
 
 	const inputActorName2 = (event: any) => {
 		setActorName2(event.target.value);
+		console.log(event.target.value);
 	};
 
 
