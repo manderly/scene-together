@@ -58,6 +58,18 @@ const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, lab
 
   const updateUserInput = (event: React.ChangeEvent<{ value: unknown }>) => {
     setUserInput(event.target.value as string);
+    if (userInput.length >= 3) {
+
+      (async () => {
+        console.log(`fetching search suggestions for ${userInput}...`);
+        const response = await findActorByName(userInput);
+  
+        const actors = response.results;
+  
+        setOptions(Object.keys(actors).map(key => actors[key]) as Actor[]);
+        
+      })();
+    }
   };
 
   React.useEffect(() => {
@@ -67,6 +79,7 @@ const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, lab
       return undefined;
     }
 
+    /*
     (async () => {
       console.log(`fetching search suggestions for ${userInput}...`);
       const response = await findActorByName(userInput);
@@ -76,10 +89,9 @@ const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, lab
       if (active) {
         setOptions(Object.keys(actors).map(key => actors[key]) as Actor[]);
       }
-    })();
+    })(); */
 
     return () => {
-      console.log("setting active to false");
       active = false;
     };
   }, [loading]);
@@ -121,7 +133,6 @@ const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, lab
             endAdornment: (
               <React.Fragment>
                 {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                {params.InputProps.endAdornment}
               </React.Fragment>
             ),
           }}
