@@ -60,15 +60,19 @@ const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, lab
     setUserInput(event.target.value as string);
     if (userInput.length >= 3) {
 
-      (async () => {
-        console.log(`fetching search suggestions for ${userInput}...`);
-        const response = await findActorByName(userInput);
+      const timer = setTimeout(() => {
+
+        (async () => {
+          console.log(`fetching search suggestions for ${userInput}...`);
+          const response = await findActorByName(userInput);
+    
+          const actors = response.results;
+          setOptions(Object.keys(actors).map(key => actors[key]) as Actor[]);
   
-        const actors = response.results;
-  
-        setOptions(Object.keys(actors).map(key => actors[key]) as Actor[]);
-        
-      })();
+        })();
+
+      }, 500);      
+      return () => clearTimeout(timer);
     }
   };
 
