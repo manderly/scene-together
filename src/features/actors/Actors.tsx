@@ -7,10 +7,10 @@ import Button from '@material-ui/core/Button';
 import MediaTypeCheckbox from 'shared/components/MediaTypeCheckbox';
 import ResultsList from 'features/actors/components/ResultsList';
 
-import { Typography, ListItemText, Box } from '@material-ui/core';
+import { Typography, Box } from '@material-ui/core';
 import { findMoviesInCommon } from 'services/movie';
 import { findActorByName } from 'services/actor';
-import { IMovie, IMovieResult } from 'shared/models/movie.model';
+import { IMovie } from 'shared/models/movie.model';
 
 import ActorNameInput from './components/ActorNameInput';
 import YearFilters from './components/YearFilters';
@@ -38,7 +38,6 @@ const Actors: React.FC = () => {  // functional component
 	const [yearCutoff, setYearCutoff] = useState('');
 	const [includeTV, setIncludeTV] = useState(true);
 	const [includeMovies, setIncludeMovies] = useState(true);
-	const [labelWidth, setLabelWidth] = useState(0);
 	const [actorName1, setActorName1] = useState('');
 	const [actorName2, setActorName2] = useState('');
 	

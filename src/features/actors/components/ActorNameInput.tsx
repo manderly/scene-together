@@ -29,7 +29,7 @@ export default ActorNameInput;
 */
 
 // *https://www.registers.service.gov.uk/registers/country/use-the-api*
-import fetch from 'cross-fetch';
+
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -40,12 +40,6 @@ import { findActorByName } from 'services/actor';
 interface Actor {
   name: string;
   id: number;
-}
-
-function sleep(delay = 0) {
-  return new Promise(resolve => {
-    setTimeout(resolve, delay);
-  });
 }
 
 interface IActorNameInput {
@@ -75,11 +69,9 @@ const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, lab
 
     (async () => {
       console.log(`fetching search suggestions for ${userInput}...`);
-      const response = await findActorByName(userInput);      
-      //await sleep(1e3); // For demo purposes.
+      const response = await findActorByName(userInput);
 
       const actors = response.results;
-      console.log(actors[0])
 
       if (active) {
         setOptions(Object.keys(actors).map(key => actors[key]) as Actor[]);
@@ -92,19 +84,15 @@ const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, lab
     };
   }, [loading]);
 
-
-
-
   React.useEffect(() => {
     if (!open) {
-      console.log("clicking off");
       setOptions([]);
     }
   }, [open]);
 
   return (
     <Autocomplete
-      id="asynchronous-demo"
+      id={id}
       style={{ width: 300 }}
       open={open}
       onOpen={() => {

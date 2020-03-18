@@ -7,7 +7,6 @@ import './App.css';
 
 import Actors from 'features/actors/Actors';
 import Shows from 'features/shows/Shows';
-
 import Header from 'shared/containers/header/Header';
 
 import {
@@ -28,7 +27,6 @@ const darkTheme = createMuiTheme({
 });
 
 function App() {
-  console.log(process.env.REACT_APP_API_KEY_TMDB)
   return (
     <Router>
       <div className="App">
