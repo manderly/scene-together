@@ -35,6 +35,8 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import debounce from 'lodash.debounce';
+
 import { findActorByName } from 'services/actor';
 
 interface Actor {
@@ -47,34 +49,41 @@ interface IActorNameInput {
     name: string;
     handleChange: (value: any) => void;
     label: string;
+    exampleName: string;
 }
 
-const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, label }) => {
+function assembleHelptext(exampleName: string) {
+  return `ex: "${exampleName}"`;
+};
+
+const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, label, exampleName }) => {
 //export default function Asynchronous() {
   const [userInput, setUserInput] = React.useState('');
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<Actor[]>([]);
   const loading = open && options.length === 0;
 
-  const updateUserInput = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setUserInput(event.target.value as string);
+  const makeAPICall = (event: React.ChangeEvent<{ value: unknown }>) => {
+
     if (userInput.length >= 3) {
 
-      const timer = setTimeout(() => {
-
-        (async () => {
-          console.log(`fetching search suggestions for ${userInput}...`);
-          const response = await findActorByName(userInput);
-    
-          const actors = response.results;
-          setOptions(Object.keys(actors).map(key => actors[key]) as Actor[]);
+      (async () => {
+        console.log(`fetching search suggestions for ${userInput}...`);
+        const response = await findActorByName(userInput);
   
-        })();
-
-      }, 500);      
-      return () => clearTimeout(timer);
+        const actors = response.results;
+        setOptions(Object.keys(actors).map(key => actors[key]) as Actor[]);
+  
+      })();
     }
-  };
+  }
+
+  const updateUserInput = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setUserInput(event.target.value as string);
+    //debounce(makeAPICall, 1000);
+  }
+
+  React.useCallback(debounce(makeAPICall, 1000), []);
 
   React.useEffect(() => {
     let active = true;
@@ -82,18 +91,6 @@ const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, lab
     if (!loading) {
       return undefined;
     }
-
-    /*
-    (async () => {
-      console.log(`fetching search suggestions for ${userInput}...`);
-      const response = await findActorByName(userInput);
-
-      const actors = response.results;
-
-      if (active) {
-        setOptions(Object.keys(actors).map(key => actors[key]) as Actor[]);
-      }
-    })(); */
 
     return () => {
       active = false;
@@ -120,7 +117,10 @@ const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, lab
         setUserInput('');
         setOpen(false);
       }}
-      getOptionSelected={(option, value) => option.name === value.name}
+      getOptionSelected={(option, value) => {
+        console.log(value);
+        return option.name === value.name
+      }}
       getOptionLabel={option => option.name}
       options={options}
       loading={loading}
@@ -129,7 +129,7 @@ const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, lab
           {...params}
           label={label}
           variant="outlined"
-          helperText='ex: "Tom Hanks"'
+          helperText={assembleHelptext(exampleName)}
           value={userInput}
           onChange={updateUserInput}
           InputProps={{

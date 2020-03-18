@@ -29,8 +29,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
-
 const Actors: React.FC = () => {  // functional component 
 	const classes = useStyles();
 
@@ -96,6 +94,7 @@ const Actors: React.FC = () => {  // functional component
 									<ActorNameInput 
 										id="actor-name-input-1" 
 										label="An actor's name"
+										exampleName="Tom Hanks"
 										name={actorName1}
 										handleChange={inputActorName1}
 									/>
@@ -105,6 +104,7 @@ const Actors: React.FC = () => {  // functional component
 									<ActorNameInput 
 										id="actor-name-input-2" 
 										label="Another actor's name"
+										exampleName="Meg Ryan"
 										name={actorName2}
 										handleChange={inputActorName2}
 									/>
