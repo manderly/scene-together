@@ -3,19 +3,17 @@ import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import TextField from '@material-ui/core/TextField';
 
 import MediaTypeCheckbox from 'shared/components/MediaTypeCheckbox';
 import ResultsList from 'features/actors/components/ResultsList';
 
-import { Typography, ListItemText } from '@material-ui/core';
+import { Typography, ListItemText, Box } from '@material-ui/core';
 import { findMoviesInCommon } from 'services/movie';
 import { findActorByName } from 'services/actor';
 import { IMovie, IMovieResult } from 'shared/models/movie.model';
+
 import ActorNameInput from './components/ActorNameInput';
+import YearFilters from './components/YearFilters';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,9 +25,6 @@ const useStyles = makeStyles((theme: Theme) =>
 		formControl: {
       margin: theme.spacing(1),
       minWidth: 120,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
     },
   }),
 );
@@ -44,7 +39,8 @@ const Actors: React.FC = () => {  // functional component
 	const [includeTV, setIncludeTV] = useState(true);
 	const [includeMovies, setIncludeMovies] = useState(true);
 	const [labelWidth, setLabelWidth] = useState(0);
-	const [actorName, setActorName] = useState('');
+	const [actorName1, setActorName1] = useState('');
+	const [actorName2, setActorName2] = useState('');
 	
 	const submitQuery = async () => {
 		const actor1 = await findActorByName("Johnny Depp");
@@ -57,7 +53,7 @@ const Actors: React.FC = () => {  // functional component
 		setMovieResults(movies);
 	}
 
-	const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+	const changeYearCutoff = (event: React.ChangeEvent<{ value: unknown }>) => {
     setYearCutoff(event.target.value as string);
 	};
 	
@@ -69,9 +65,12 @@ const Actors: React.FC = () => {  // functional component
 		setIncludeMovies(checked);
 	};
 
-	const inputActorName = (event: any) => {
-		console.log(event)
-		setActorName(event.target.value);
+	const inputActorName1 = (event: any) => {
+		setActorName1(event.target.value);
+	};
+
+	const inputActorName2 = (event: any) => {
+		setActorName2(event.target.value);
 	};
 
 
@@ -79,70 +78,43 @@ const Actors: React.FC = () => {  // functional component
 		<div>
 			<form className={classes.root} noValidate autoComplete="off">
 				{/* Instructions */}
-				<Grid container spacing={4} alignItems="center">
-					<Grid item xs={2}></Grid>
-					<Grid item xs={8}>
-					<Typography variant="h5">
-							Search by actor names
-						</Typography>
+				<Box bgcolor="white">
+				<Grid container spacing={2} direction="column" alignItems="center" justify="center">
 
-					<Typography>Enter the names of two actors to find out what films they've worked on together.</Typography>
-					</Grid>
-					<Grid item xs={2}></Grid>
-				</Grid>
+					<Grid item xs={12}>
 
-				{/* Actor search fields */}
-				<Grid container spacing={4} alignItems="center">
+						<Box textAlign="center" pt={4}>
+							<Typography variant="h4">Search by actor names</Typography>
+							<p>Enter the names of two actors to find out what films they've worked on together.</p>
+						</Box>
 
-					<Grid item xs={2}></Grid>
+						{/* Actor search fields */}
+						<Box textAlign="center" p={2}>
+							<Grid container spacing={2} direction="row">
+								<Grid item xs={12} md={6}>
+									<ActorNameInput 
+										id="actor-name-input-1" 
+										label="An actor's name"
+										name={actorName1}
+										handleChange={inputActorName1}
+									/>
+								</Grid>
 
-					<Grid item xs={4}>
-						<ActorNameInput 
-							id="actor-name-input-1" 
-							name={actorName}
-							handleChange={inputActorName}
-						/>
-					</Grid>
+								<Grid item xs={12} md={6}>
+									<ActorNameInput 
+										id="actor-name-input-2" 
+										label="Another actor's name"
+										name={actorName2}
+										handleChange={inputActorName2}
+									/>
+								</Grid>
+							</Grid>
+						</Box>
 
-					{/* Right field */}
-					<Grid item xs={4}>
-						<TextField 
-							id="form-field-2"
-							variant="filled" 
-							fullWidth 
-							label="Another actor name..." 
-							color="secondary"
-							placeholder="Another actor name"/>
-					</Grid>
+						{/* Search filter fields */}
+						<Typography variant="h5">Search filters</Typography>
 
-					<Grid item xs={2}></Grid>
-				</Grid>
-
-				{/* Search filter fields */}
-				<Grid container spacing={4} alignItems="center">
-					<Grid item xs={2}></Grid>
-
-					<Grid item xs={8}>
-						<InputLabel shrink id="yearCutoff-select-label">
-							Only include shows from the past...
-						</InputLabel>
-
-						<FormControl style={{minWidth: 220, marginRight: 50}}>
-							<Select
-								labelId="yearCutoff-select-label"
-								id="yearCutoff-select"
-								value={yearCutoff}
-								onChange={handleChange}
-								displayEmpty
-								className={classes.selectEmpty}
-								labelWidth={labelWidth}
-							>
-								<option value="">All years</option>
-								<option value={5}>5 years</option>
-								<option value={15}>15 years</option>
-								<option value={30}>30 years</option>
-							</Select>
-						</FormControl>
+						<YearFilters yearCutoff={yearCutoff} handleChange={changeYearCutoff}/>
 
 						<Grid item>
 							<MediaTypeCheckbox checked={includeTV} onChange={toggleTVCheckbox} label="TV shows" />
@@ -152,14 +124,16 @@ const Actors: React.FC = () => {  // functional component
 							<MediaTypeCheckbox checked={includeMovies} onChange={toggleMoviesCheckbox} label="Movies" />
 						</Grid>
 
+						{/* Submit form button */}
 						<Grid item>
-							<Button variant="contained" color="primary" size="large" onClick={submitQuery}>Find shows in common!</Button>
+							<Box textAlign="center" p={4}>
+								<Button variant="contained" color="primary" size="large" onClick={submitQuery}>Find shows in common!</Button>
+							</Box>
+						</Grid>
+
 						</Grid>
 					</Grid>
-
-					<Grid item xs={2}></Grid>
-
-				</Grid>
+					</Box>
 			</form>
 
 			{/* only show this section once movieResults has data */}
@@ -169,7 +143,7 @@ const Actors: React.FC = () => {  // functional component
 
 					<Grid item xs={8}>
 						{/* Title varies with filters */}
-						<Typography variant="h5">
+						<Typography variant="h4">
 							Shows in common
 						</Typography>
 

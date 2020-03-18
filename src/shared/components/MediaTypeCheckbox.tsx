@@ -16,7 +16,8 @@ const MediaTypeCheckbox: React.FC<IMediaTypeCheckbox> = ({ children, onChange, l
   return (
       <FormControlLabel
         value={checked}
-        control={<Checkbox color="secondary" onChange={e => onChange(e.target.checked)} checked={checked}/>}
+        control={
+          <Checkbox size="small" color="secondary" onChange={e => onChange(e.target.checked)} checked={checked}/>}
         label={label}
         labelPlacement="end"
       />
