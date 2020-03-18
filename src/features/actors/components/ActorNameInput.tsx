@@ -35,7 +35,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import debounce from 'lodash.debounce';
+import useDebounce from 'shared/hooks/useDebounce';
 
 import { findActorByName } from 'services/actor';
 
@@ -63,27 +63,23 @@ const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, lab
   const [options, setOptions] = React.useState<Actor[]>([]);
   const loading = open && options.length === 0;
 
-  const makeAPICall = (event: React.ChangeEvent<{ value: unknown }>) => {
-
-    if (userInput.length >= 3) {
-
-      (async () => {
-        console.log(`fetching search suggestions for ${userInput}...`);
-        const response = await findActorByName(userInput);
-  
-        const actors = response.results;
-        setOptions(Object.keys(actors).map(key => actors[key]) as Actor[]);
-  
-      })();
-    }
-  }
+  const debouncedUserInput = useDebounce(userInput, 250);
 
   const updateUserInput = (event: React.ChangeEvent<{ value: unknown }>) => {
     setUserInput(event.target.value as string);
-    //debounce(makeAPICall, 1000);
   }
 
-  React.useCallback(debounce(makeAPICall, 1000), []);
+  React.useEffect(() => {
+    if (debouncedUserInput.length >= 3) {
+      (async () => {
+        console.log(`fetching search suggestions for ${debouncedUserInput}...`);
+        const response = await findActorByName(debouncedUserInput);
+        const actors = response.results;
+        setOptions(Object.keys(actors).map(key => actors[key]) as Actor[]);
+      })();
+    }
+  }, [debouncedUserInput]);
+
 
   React.useEffect(() => {
     let active = true;

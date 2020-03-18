@@ -15,6 +15,16 @@ import { IMovie } from 'shared/models/movie.model';
 import ActorNameInput from './components/ActorNameInput';
 import YearFilters from './components/YearFilters';
 
+const popularPairs = [
+	{name1: "Tom Hanks", name2: "Meg Ryan"},
+	{name1: "Helena Bonham Carter", name2: "Johnny Depp"},
+	{name1: "Angelina Jolie", name2: "Brad Pitt"},
+	{name1: "David Tennant", name2: "Olivia Colman"},
+	{name1: "Kate Winslet", name2: "Leonardo DiCaprio"},
+	{name1: "Julia Roberts", name2: "Richard Gere"},
+	{name1: "Ben Affleck", name2: "Matt Damon"}
+];
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
