@@ -1,42 +1,8 @@
-/* 
-import React from 'react';
-import { TextField } from '@material-ui/core';
-
-// define the params here 
-interface IActorNameInput {
-    id: string;
-    name: string;
-    handleChange: (value: any) => void;
-    label: string;
-}
-
-const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, label }) => {
-    return (
-        <TextField 
-            id={id}
-            variant="outlined"
-            fullWidth
-            label={label}
-            color="secondary" 
-            helperText='ex: "Tom Hanks"'
-            value={name}
-            onChange={handleChange}
-        />
-    );
-}
-
-export default ActorNameInput;
-*/
-
-// *https://www.registers.service.gov.uk/registers/country/use-the-api*
-
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
 import useDebounce from 'shared/hooks/useDebounce';
-
 import { findActorByName } from 'services/actor';
 
 interface Actor {
@@ -73,9 +39,11 @@ const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, lab
   React.useEffect(() => {
     if (debouncedUserInput.length >= 3) {
       (async () => {
-        console.log(`fetching search suggestions for ${debouncedUserInput}...`);
+        //console.log(`fetching search suggestions for ${debouncedUserInput}...`);
         const response = await findActorByName(debouncedUserInput);
         const actors = response.results;
+        // populates the dropdown list of actors with names like the search query
+        console.log(actors);
         setOptions(Object.keys(actors).map(key => actors[key]) as Actor[]);
       })();
     }

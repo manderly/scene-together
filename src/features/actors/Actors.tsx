@@ -9,7 +9,7 @@ import ResultsList from 'features/actors/components/ResultsList';
 
 import { Typography, Box } from '@material-ui/core';
 import { findMoviesInCommon } from 'services/movie';
-import { findActorByName } from 'services/actor';
+import { findActorByName, getActorCredits } from 'services/actor';
 import { IMovie } from 'shared/models/movie.model';
 
 import ActorNameInput from './components/ActorNameInput';
@@ -32,6 +32,13 @@ const popularPairs = [
 	{name1: "Joan Cusack", name2: "John Cusack"},
 	{name1: "Adam Sandler", name2: "Rob Schneider"},
 ];
+
+/* Some actor IDs, useful for testing 
+		1204 - Julia Roberts
+
+		20049 - David Tennant
+		26076 - Billie Piper
+*/
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,6 +68,9 @@ const Actors: React.FC = () => {  // functional component
 	const [actorID1, setActorID1] = useState(0);
 	const [actorID2, setActorID2] = useState(0);
 
+	const [actorCredits1, setActorCredits1] = useState();
+	const [actorCredits2, setActorCredits2] = useState();
+
 	React.useEffect(() => {
 		chooseExamplePair();
 	}, []);
@@ -70,14 +80,13 @@ const Actors: React.FC = () => {  // functional component
 	}
 
 	const submitQuery = async () => {
-		//const actor1 = await findActorByName("Johnny Depp");
-		//var actorID1 = actor1.results[0]['id'];
-
-		//const actor2 = await findActorByName("Helena Bonham Carter");
-		//var actorID2 = actor2.results[0]['id'];
-
 		const movies = await findMoviesInCommon([actorID1, actorID2]);
 		setMovieResults(movies);
+
+		const actorCredits1 = await getActorCredits(actorID1);
+		const actorCredits2 = await getActorCredits(actorID2);
+
+		console.log(actorCredits1);
 	}
 
 	const changeYearCutoff = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -94,12 +103,10 @@ const Actors: React.FC = () => {  // functional component
 
 	const inputActorName1 = (event: any) => {
 		setActorName1(event.target.value);
-		console.log(event.target.value);
 	};
 
 	const inputActorName2 = (event: any) => {
 		setActorName2(event.target.value);
-		console.log(event.target.value);
 	};
 
   return (
