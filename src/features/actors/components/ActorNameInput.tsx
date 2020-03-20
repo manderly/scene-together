@@ -43,7 +43,6 @@ const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, lab
         const response = await findActorByName(debouncedUserInput);
         const actors = response.results;
         // populates the dropdown list of actors with names like the search query
-        console.log(actors);
         setOptions(Object.keys(actors).map(key => actors[key]) as Actor[]);
       })();
     }

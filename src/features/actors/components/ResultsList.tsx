@@ -2,10 +2,11 @@ import React from 'react';
 import { IMovieResult } from 'shared/models/movie.model';
 import ListItem from '@material-ui/core/ListItem';
 import { ListItemText } from '@material-ui/core';
+import { ITVShowResult } from 'shared/models/tvshow.model';
 
 // define the params here 
 interface IResultsList {
-    results: IMovieResult[];
+    results: Array<IMovieResult & ITVShowResult>;
 }
 
 /* Needs a root node, so <>  </> serves that purpose here */
@@ -13,12 +14,15 @@ const ResultsList: React.FC<IResultsList> = ({ results }) => {
   return (
     <>
       {
-        results.map((result: IMovieResult, index: number) => {
+        results.map((result: IMovieResult & ITVShowResult, index: number) => {
+          // the result can be a movie or a tv show
+          // the "&" here sorta combines them into one model, conceptually
+          // and it's up to us to pick the right params to display for primary and secondary
           return (
             <ListItem key={index}>
               <ListItemText
-                primary={result.title}
-                secondary={result.release_date}
+                primary={result?.title ?? result?.name}
+                secondary={result?.release_date ?? result?.first_air_date}
               />
             </ListItem>
           )

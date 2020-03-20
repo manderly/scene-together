@@ -10,7 +10,7 @@ export const findActorByName = async (name: string = ''): Promise<IActor> => {
     return result.data;
 }
 
-export const getActorCredits = async (id: number): Promise<IActorCredits> => {
+export const getActorCredits = async (id: number): Promise<[]> => {
     const result = await getAPI(`3/person/${id}/combined_credits`, {});
     return result.data.cast;
 }

@@ -9,8 +9,9 @@ import ResultsList from 'features/actors/components/ResultsList';
 
 import { Typography, Box } from '@material-ui/core';
 import { findMoviesInCommon } from 'services/movie';
-import { findActorByName, getActorCredits } from 'services/actor';
+import { getActorCredits } from 'services/actor';
 import { IMovie } from 'shared/models/movie.model';
+import { ITVShow } from 'shared/models/tvshow.model';
 
 import ActorNameInput from './components/ActorNameInput';
 import YearFilters from './components/YearFilters';
@@ -67,6 +68,7 @@ const Actors: React.FC = () => {  // functional component
 	const [examplePair, setExamplePair] = useState({});
 	const [actorID1, setActorID1] = useState(0);
 	const [actorID2, setActorID2] = useState(0);
+	const [results, setResults] = useState([]);
 
 	const [actorCredits1, setActorCredits1] = useState();
 	const [actorCredits2, setActorCredits2] = useState();
@@ -87,6 +89,33 @@ const Actors: React.FC = () => {  // functional component
 		const actorCredits2 = await getActorCredits(actorID2);
 
 		console.log(actorCredits1);
+		console.log(actorCredits2);
+
+		// For every value in Actor 1's array, find matches in Actor 2's array 
+
+		// if media_type = "movie", then use "title"
+		// if media_type = "tv", then use "name"
+		// tv shows with an undefined name are talk shows 
+
+		var matches = [];
+		actorCredits1.forEach((val) => {
+			// todo: check user's filters and don't show tv or movies if unchecked
+			if (val['media_type'] === 'tv' && val['name'] != undefined && val['character'] != '') {
+				const match = actorCredits2.find((res) => res['name'] === val['name'] && res['name'] != undefined && res['character'] != '');
+				if (match) {
+					matches.push(match);
+				}
+			} else if (val['media_type'] === 'movie') {
+				const match = actorCredits2.find((res) => res['title'] === val['title']);
+				if (match) {
+					matches.push(match);
+				}
+			}
+		});
+
+		console.log(matches);
+		setResults(matches);
+
 	}
 
 	const changeYearCutoff = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -176,7 +205,7 @@ const Actors: React.FC = () => {  // functional component
 			</form>
 
 			{/* only show this section once movieResults has data */}
-			{movieResults && 
+			{results && 
 				<Grid container spacing={4} alignItems="center">
 					<Grid item xs={2}></Grid>
 
@@ -186,7 +215,7 @@ const Actors: React.FC = () => {  // functional component
 							Shows in common
 						</Typography>
 
-						<ResultsList results={movieResults.results} />
+						<ResultsList results={results} />
 
 					</Grid>
 
