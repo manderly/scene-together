@@ -11,3 +11,7 @@ export interface IActorResult {
     release_date: number;
     vote_average: number;
 }
+
+export interface IActorCredits {
+    credits: [];
+}

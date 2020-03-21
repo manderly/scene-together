@@ -7,13 +7,39 @@ import Button from '@material-ui/core/Button';
 import MediaTypeCheckbox from 'shared/components/MediaTypeCheckbox';
 import ResultsList from 'features/actors/components/ResultsList';
 
-import { Typography, ListItemText, Box } from '@material-ui/core';
+import { Typography, Box } from '@material-ui/core';
 import { findMoviesInCommon } from 'services/movie';
-import { findActorByName } from 'services/actor';
-import { IMovie, IMovieResult } from 'shared/models/movie.model';
+import { getActorCredits } from 'services/actor';
+import { IMovie } from 'shared/models/movie.model';
+import { ITVShow } from 'shared/models/tvshow.model';
 
 import ActorNameInput from './components/ActorNameInput';
 import YearFilters from './components/YearFilters';
+
+const popularPairs = [
+	{name1: "Tom Hanks", name2: "Meg Ryan"},
+	{name1: "Emma Stone", name2: "Ryan Gosling"},
+	{name1: "Bradley Cooper", name2: "Jennifer Lawrence"},
+	{name1: "Jon Favreau", name2: "Vince Vaughn"},
+	{name1: "Nick Frost", name2: "Simon Pegg"},
+	{name1: "Helena Bonham Carter", name2: "Johnny Depp"},
+	{name1: "Angelina Jolie", name2: "Brad Pitt"},
+	{name1: "David Tennant", name2: "Olivia Colman"},
+	{name1: "Kate Winslet", name2: "Leonardo DiCaprio"},
+	{name1: "Julia Roberts", name2: "Richard Gere"},
+	{name1: "Ben Affleck", name2: "Matt Damon"},
+	{name1: "Ben Stiller", name2: "Owen Wilson"},
+	{name1: "James Franco", name2: "Seth Rogen"},
+	{name1: "Joan Cusack", name2: "John Cusack"},
+	{name1: "Adam Sandler", name2: "Rob Schneider"},
+];
+
+/* Some actor IDs, useful for testing 
+		1204 - Julia Roberts
+
+		20049 - David Tennant
+		26076 - Billie Piper
+*/
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,7 +56,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-
 const Actors: React.FC = () => {  // functional component 
 	const classes = useStyles();
 
@@ -38,19 +63,59 @@ const Actors: React.FC = () => {  // functional component
 	const [yearCutoff, setYearCutoff] = useState('');
 	const [includeTV, setIncludeTV] = useState(true);
 	const [includeMovies, setIncludeMovies] = useState(true);
-	const [labelWidth, setLabelWidth] = useState(0);
 	const [actorName1, setActorName1] = useState('');
 	const [actorName2, setActorName2] = useState('');
+	const [examplePair, setExamplePair] = useState({});
+	const [actorID1, setActorID1] = useState(0);
+	const [actorID2, setActorID2] = useState(0);
+	const [results, setResults] = useState([]);
+
+	const [actorCredits1, setActorCredits1] = useState();
+	const [actorCredits2, setActorCredits2] = useState();
+
+	React.useEffect(() => {
+		chooseExamplePair();
+	}, []);
 	
+	function chooseExamplePair() {
+		setExamplePair(popularPairs[Math.floor(Math.random()*popularPairs.length)]);
+	}
+
 	const submitQuery = async () => {
-		const actor1 = await findActorByName("Johnny Depp");
-		var actorID1 = actor1.results[0]['id'];
-
-		const actor2 = await findActorByName("Helena Bonham Carter");
-		var actorID2 = actor2.results[0]['id'];
-
-		const movies = await findMoviesInCommon([actorID1, actorID2]); //287, 819
+		const movies = await findMoviesInCommon([actorID1, actorID2]);
 		setMovieResults(movies);
+
+		const actorCredits1 = await getActorCredits(actorID1);
+		const actorCredits2 = await getActorCredits(actorID2);
+
+		console.log(actorCredits1);
+		console.log(actorCredits2);
+
+		// For every value in Actor 1's array, find matches in Actor 2's array 
+
+		// if media_type = "movie", then use "title"
+		// if media_type = "tv", then use "name"
+		// tv shows with an undefined name are talk shows 
+
+		var matches = [];
+		actorCredits1.forEach((val) => {
+			// todo: check user's filters and don't show tv or movies if unchecked
+			if (val['media_type'] === 'tv' && val['name'] != undefined && val['character'] != '') {
+				const match = actorCredits2.find((res) => res['name'] === val['name'] && res['name'] != undefined && res['character'] != '');
+				if (match) {
+					matches.push(match);
+				}
+			} else if (val['media_type'] === 'movie') {
+				const match = actorCredits2.find((res) => res['title'] === val['title']);
+				if (match) {
+					matches.push(match);
+				}
+			}
+		});
+
+		console.log(matches);
+		setResults(matches);
+
 	}
 
 	const changeYearCutoff = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -73,7 +138,6 @@ const Actors: React.FC = () => {  // functional component
 		setActorName2(event.target.value);
 	};
 
-
   return (
 		<div>
 			<form className={classes.root} noValidate autoComplete="off">
@@ -95,8 +159,10 @@ const Actors: React.FC = () => {  // functional component
 									<ActorNameInput 
 										id="actor-name-input-1" 
 										label="An actor's name"
+										exampleName={examplePair['name1']}
 										name={actorName1}
 										handleChange={inputActorName1}
+										setActorID={setActorID1}
 									/>
 								</Grid>
 
@@ -104,8 +170,10 @@ const Actors: React.FC = () => {  // functional component
 									<ActorNameInput 
 										id="actor-name-input-2" 
 										label="Another actor's name"
+										exampleName={examplePair['name2']}
 										name={actorName2}
 										handleChange={inputActorName2}
+										setActorID={setActorID2}
 									/>
 								</Grid>
 							</Grid>
@@ -137,7 +205,7 @@ const Actors: React.FC = () => {  // functional component
 			</form>
 
 			{/* only show this section once movieResults has data */}
-			{movieResults && 
+			{results && 
 				<Grid container spacing={4} alignItems="center">
 					<Grid item xs={2}></Grid>
 
@@ -147,7 +215,7 @@ const Actors: React.FC = () => {  // functional component
 							Shows in common
 						</Typography>
 
-						<ResultsList results={movieResults.results} />
+						<ResultsList results={results} />
 
 					</Grid>
 

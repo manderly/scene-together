@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Select } from '@material-ui/core';
+import { Select } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';

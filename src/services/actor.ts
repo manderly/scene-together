@@ -1,5 +1,5 @@
 import { getAPI } from "./api"
-import { IActor } from 'shared/models/actor.model';
+import { IActor, IActorCredits } from 'shared/models/actor.model';
 
 export const findActorByName = async (name: string = ''): Promise<IActor> => {
     const params = {
@@ -8,4 +8,9 @@ export const findActorByName = async (name: string = ''): Promise<IActor> => {
     };
     const result = await getAPI('3/search/person', params);
     return result.data;
+}
+
+export const getActorCredits = async (id: number): Promise<[]> => {
+    const result = await getAPI(`3/person/${id}/combined_credits`, {});
+    return result.data.cast;
 }
