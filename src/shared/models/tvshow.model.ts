@@ -10,4 +10,5 @@ export interface ITVShowResult {
   first_air_date: number;
   episode_count: number;
   vote_average: number;
+  media_type: string;
 }

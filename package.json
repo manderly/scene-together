@@ -16,8 +16,10 @@
     "@types/react-router": "^5.1.4",
     "axios": "^0.19.2",
     "cross-fetch": "^3.0.4",
+    "moment": "^2.24.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-moment": "^0.9.7",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "typescript": "^3.7.5"

@@ -1,8 +1,11 @@
 import React from 'react';
+import Moment from 'react-moment';
+
 import { IMovieResult } from 'shared/models/movie.model';
 import ListItem from '@material-ui/core/ListItem';
 import { ListItemText } from '@material-ui/core';
 import { ITVShowResult } from 'shared/models/tvshow.model';
+import ShowDetails from './ShowDetails';
 
 // define the params here 
 interface IResultsList {
@@ -20,9 +23,10 @@ const ResultsList: React.FC<IResultsList> = ({ results }) => {
           // and it's up to us to pick the right params to display for primary and secondary
           return (
             <ListItem key={index}>
-              <ListItemText
-                primary={result?.title ?? result?.name}
-                secondary={result?.release_date ?? result?.first_air_date}
+              <ShowDetails 
+                showName={result?.title ?? result?.name}
+                showDate={result?.release_date ?? result?.first_air_date}
+                showType={result?.media_type ?? result?.media_type}
               />
             </ListItem>
           )

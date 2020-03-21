@@ -9,4 +9,5 @@ export interface IMovieResult {
     title: string;
     release_date: number;
     vote_average: number;
+    media_type: string;
 }
