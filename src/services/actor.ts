@@ -1,5 +1,5 @@
 import { getAPI } from "./api"
-import { IActor, IActorCredits } from 'shared/models/actor.model';
+import { IActor } from 'shared/models/actor.model';
 
 export const findActorByName = async (name: string = ''): Promise<IActor> => {
     const params = {

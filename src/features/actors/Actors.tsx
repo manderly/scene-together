@@ -8,10 +8,7 @@ import MediaTypeCheckbox from 'shared/components/MediaTypeCheckbox';
 import ResultsList from 'features/actors/components/ResultsList';
 
 import { Typography, Box } from '@material-ui/core';
-import { findMoviesInCommon } from 'services/movie';
 import { getActorCredits } from 'services/actor';
-import { IMovie } from 'shared/models/movie.model';
-import { ITVShow } from 'shared/models/tvshow.model';
 
 import ActorNameInput from './components/ActorNameInput';
 import YearFilters from './components/YearFilters';
@@ -59,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const Actors: React.FC = () => {  // functional component 
 	const classes = useStyles();
 
-	const [movieResults, setMovieResults] = useState<IMovie | null>(null);
+	//const [movieResults, setMovieResults] = useState<IMovie | null>(null);
 	const [yearCutoff, setYearCutoff] = useState('');
 	const [includeTV, setIncludeTV] = useState(true);
 	const [includeMovies, setIncludeMovies] = useState(true);
@@ -99,8 +96,8 @@ const Actors: React.FC = () => {  // functional component
 		// tv shows with an undefined name are talk shows 
 		actorCredits1.forEach((val) => {
 			// todo: check user's filters and don't show tv or movies if unchecked
-			if (includeTV && val['media_type'] === 'tv' && val['name'] != undefined && val['character'] != '') {
-				const match = actorCredits2.find((res) => res['name'] === val['name'] && res['name'] != undefined && res['character'] != '');
+			if (includeTV && val['media_type'] === 'tv' && val['name'] !== undefined && val['character'] !== '') {
+				const match = actorCredits2.find((res) => res['name'] === val['name'] && res['name'] !== undefined && res['character'] !== '');
 				if (match) {
 					matches.push(match);
 				}
