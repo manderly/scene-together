@@ -1,9 +1,6 @@
 import React from 'react';
-import Moment from 'react-moment';
-
 import { IMovieResult } from 'shared/models/movie.model';
 import ListItem from '@material-ui/core/ListItem';
-import { ListItemText } from '@material-ui/core';
 import { ITVShowResult } from 'shared/models/tvshow.model';
 import ShowDetails from './ShowDetails';
 

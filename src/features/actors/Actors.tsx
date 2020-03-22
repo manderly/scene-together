@@ -70,9 +70,6 @@ const Actors: React.FC = () => {  // functional component
 	const [actorID2, setActorID2] = useState(0);
 	const [results, setResults] = useState([]);
 
-	const [actorCredits1, setActorCredits1] = useState();
-	const [actorCredits2, setActorCredits2] = useState();
-
 	React.useEffect(() => {
 		chooseExamplePair();
 	}, []);
@@ -82,9 +79,13 @@ const Actors: React.FC = () => {  // functional component
 	}
 
 	const submitQuery = async () => {
-		const movies = await findMoviesInCommon([actorID1, actorID2]);
-		setMovieResults(movies);
+		var matches = [];
 
+		/* If the user only wants movies, that's easy - there's an API call just for movies that include actor IDs*/
+		//const movies = await findMoviesInCommon([actorID1, actorID2]);
+		//setMovieResults(movies);
+
+		/* But we want to get movies, TV, or both - so we get the actor credits and find overlaps */ 
 		const actorCredits1 = await getActorCredits(actorID1);
 		const actorCredits2 = await getActorCredits(actorID2);
 
@@ -96,16 +97,14 @@ const Actors: React.FC = () => {  // functional component
 		// if media_type = "movie", then use "title"
 		// if media_type = "tv", then use "name"
 		// tv shows with an undefined name are talk shows 
-
-		var matches = [];
 		actorCredits1.forEach((val) => {
 			// todo: check user's filters and don't show tv or movies if unchecked
-			if (val['media_type'] === 'tv' && val['name'] != undefined && val['character'] != '') {
+			if (includeTV && val['media_type'] === 'tv' && val['name'] != undefined && val['character'] != '') {
 				const match = actorCredits2.find((res) => res['name'] === val['name'] && res['name'] != undefined && res['character'] != '');
 				if (match) {
 					matches.push(match);
 				}
-			} else if (val['media_type'] === 'movie') {
+			} else if (includeMovies && val['media_type'] === 'movie') {
 				const match = actorCredits2.find((res) => res['title'] === val['title']);
 				if (match) {
 					matches.push(match);
@@ -113,10 +112,10 @@ const Actors: React.FC = () => {  // functional component
 			}
 		});
 
+		matches.sort((a, b) => (a['release_date'] > b['release_date'] || a['first_air_date'] > b['first_air_date']) ? -1: 1);
 		console.log(matches);
 		setResults(matches);
-
-	}
+	};
 
 	const changeYearCutoff = (event: React.ChangeEvent<{ value: unknown }>) => {
     setYearCutoff(event.target.value as string);
