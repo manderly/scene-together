@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -54,6 +54,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 const Actors: React.FC = () => {  // functional component 
+	// so validation doesn't run on first render 
+	const firstRender = useRef(true)
+
 	const classes = useStyles();
 
 	//const [movieResults, setMovieResults] = useState<IMovie | null>(null);
@@ -63,9 +66,41 @@ const Actors: React.FC = () => {  // functional component
 	const [actorName1, setActorName1] = useState('');
 	const [actorName2, setActorName2] = useState('');
 	const [examplePair, setExamplePair] = useState({});
-	const [actorID1, setActorID1] = useState(0);
-	const [actorID2, setActorID2] = useState(0);
+	const [actorID1, setActorID1] = useState<number | null>(0);
+	const [actorID2, setActorID2] = useState<number | null>(0);
 	const [results, setResults] = useState([]);
+
+	// we can also set error messages to display to the user
+  const [actorNameError1, setActorNameError1] = useState<string | null>(null);
+	const [actorNameError2, setActorNameError2] = useState<string | null>(null);
+
+	// This was helpful in figuring out how to do form validation
+	// https://medium.com/@kitson.broadhurst/simple-form-validation-with-react-hooks-usestate-and-useeffect-57620d808cc8 
+  const formValidation = () => {
+		let isValid = false;
+
+    if (!actorID1 || actorID1 === 0) {
+      setActorNameError1('Name cant be blank!');
+		}
+		
+		if (!actorID2 || actorID2 === 0) {
+			setActorNameError2('Name cant be blank!');
+		}
+
+		if (actorID1 && actorID1 > 0) {
+      setActorNameError1(null);
+		}
+
+		if (actorID2 && actorID2 > 0) {
+			setActorNameError2(null);
+		}
+
+		if (actorID1 && actorID2) {
+			isValid = true;
+		}
+
+		return isValid;
+  }
 
 	React.useEffect(() => {
 		chooseExamplePair();
@@ -82,9 +117,17 @@ const Actors: React.FC = () => {  // functional component
 		//const movies = await findMoviesInCommon([actorID1, actorID2]);
 		//setMovieResults(movies);
 
-		/* But we want to get movies, TV, or both - so we get the actor credits and find overlaps */ 
-		const actorCredits1 = await getActorCredits(actorID1);
-		const actorCredits2 = await getActorCredits(actorID2);
+		/* But we want to get movies, TV, or both - so we get the actor credits and find overlaps */
+		let actorCredits1 = [];
+		let actorCredits2 = [];
+
+		if (actorID1) {
+			actorCredits1 = await getActorCredits(actorID1);
+		}
+
+		if (actorID2) {
+			actorCredits2 = await getActorCredits(actorID2);
+		}
 
 		console.log(actorCredits1);
 		console.log(actorCredits2);
@@ -134,9 +177,17 @@ const Actors: React.FC = () => {  // functional component
 		setActorName2(event.target.value);
 	};
 
+	const handleSubmit = (event: any) => {
+		event.preventDefault();
+		if (formValidation()) {
+			submitQuery();
+		} 
+		// else, form contains errors
+	 }
+
   return (
 		<div>
-			<form className={classes.root} noValidate autoComplete="off">
+			<form className={classes.root} noValidate autoComplete="off" onSubmit={ handleSubmit }>
 				{/* Instructions */}
 				<Box bgcolor="white">
 				<Grid container spacing={2} direction="column" alignItems="center" justify="center">
@@ -159,6 +210,7 @@ const Actors: React.FC = () => {  // functional component
 										name={actorName1}
 										handleChange={inputActorName1}
 										setActorID={setActorID1}
+										error={actorNameError1}
 									/>
 								</Grid>
 
@@ -170,6 +222,7 @@ const Actors: React.FC = () => {  // functional component
 										name={actorName2}
 										handleChange={inputActorName2}
 										setActorID={setActorID2}
+										error={actorNameError2}
 									/>
 								</Grid>
 							</Grid>
@@ -191,7 +244,7 @@ const Actors: React.FC = () => {  // functional component
 						{/* Submit form button */}
 						<Grid item>
 							<Box textAlign="center" p={4}>
-								<Button variant="contained" color="primary" size="large" onClick={submitQuery}>Find shows in common!</Button>
+								<Button variant="contained" color="primary" size="large" type="submit">Find shows in common!</Button>
 							</Box>
 						</Grid>
 

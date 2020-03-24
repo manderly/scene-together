@@ -17,13 +17,14 @@ interface IActorNameInput {
     label: string;
     exampleName: string;
     setActorID: (id: number) => void;
+    error?: string | null;  // the ? indicates that error is optional
 }
 
 function assembleHelptext(exampleName: string) {
   return `ex: "${exampleName}"`;
 };
 
-const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, label, exampleName, setActorID }) => {
+const ActorNameInput: React.FC<IActorNameInput> = ({ id, error, name, handleChange, label, exampleName, setActorID }) => {
 //export default function Asynchronous() {
   const [userInput, setUserInput] = React.useState('');
   const [open, setOpen] = React.useState(false);
@@ -68,48 +69,52 @@ const ActorNameInput: React.FC<IActorNameInput> = ({ id, name, handleChange, lab
   }, [open]);
 
   return (
-    <Autocomplete
-      id={id}
-      style={{ width: 300 }}
-      open={open}
-      onOpen={() => {
-        if (userInput.length >= 3) {
-          setOpen(true);
-        }
-      }}
-      onChange={(event: object, value: any, reason: string) => {
-        // calls the method that was passed in from Actors.tsx to set Actor ID in Actors.tsx's state
-        setActorID(value.id)
-      }}
-      onClose={() => {
-        setUserInput('');
-        setOpen(false);
-      }}
-      getOptionSelected={(option, value) => {
-        return option.name === value.name
-      }}
-      getOptionLabel={option => option.name}
-      options={options}
-      loading={loading}
-      renderInput={params => (
-        <TextField
-          {...params}
-          label={label}
-          variant="outlined"
-          helperText={assembleHelptext(exampleName)}
-          value={userInput}
-          onChange={updateUserInput}
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <React.Fragment>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-              </React.Fragment>
-            ),
-          }}
-        />
-      )}
-    />
+    <>
+      <Autocomplete
+        id={id}
+        style={{ width: 300 }}
+        open={open}
+        onOpen={() => {
+          if (userInput.length >= 3) {
+            setOpen(true);
+          }
+        }}
+        onChange={(event: object, value: any, reason: string) => {
+          // calls the method that was passed in from Actors.tsx to set Actor ID in Actors.tsx's state
+          setActorID(value.id)
+        }}
+        onClose={() => {
+          setUserInput('');
+          setOpen(false);
+        }}
+        getOptionSelected={(option, value) => {
+          return option.name === value.name
+        }}
+        getOptionLabel={option => option.name}
+        options={options}
+        loading={loading}
+        renderInput={params => (
+          <TextField
+            error={!!error}
+            {...params}
+            label={label}
+            variant="outlined"
+            helperText={assembleHelptext(exampleName)}
+            value={userInput}
+            onChange={updateUserInput}
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: (
+                <React.Fragment>
+                  {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                </React.Fragment>
+              ),
+            }}
+          />
+        )}
+      />
+    {error}
+    </>
   );
 }
 
