@@ -15,13 +15,6 @@ import YearFilters from './components/YearFilters';
 
 import { chooseExampleActorPair } from 'services/popularPairs';
 
-/* Some actor IDs, useful for testing 
-		1204 - Julia Roberts
-
-		20049 - David Tennant
-		26076 - Billie Piper
-*/
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -35,7 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
-
 
 const Actors: React.FC = () => {  // functional component 
 	const classes = useStyles();
@@ -106,11 +98,6 @@ const Actors: React.FC = () => {  // functional component
 			actorCredits2 = await getActorCredits(actorID2);
 		}
 
-		//console.log(actorCredits1);
-		//console.log(actorCredits2);
-
-		// For every value in Actor 1's array, find matches in Actor 2's array 
-
 		// if media_type = "movie", then use "title"
 		// if media_type = "tv", then use "name"
 		// tv shows with an undefined name are talk shows 
@@ -158,8 +145,7 @@ const Actors: React.FC = () => {  // functional component
 		event.preventDefault();
 		if (formValidation()) {
 			submitQuery();
-		} 
-		// else, form contains errors
+		} // else, form contains errors
 	 }
 
   return (
