@@ -27,20 +27,20 @@ const Header: React.FC = () => {
     <AppBar position="static" color="primary">
       <Toolbar>
 
-        <Typography variant="h6" className={classes.title}>
-          Actors in Common
+        <Typography variant="h5" className={classes.title}>
+          <b><i>Actors in Common</i></b>
         </Typography>
 
         <ul className="app-header-link-list">
           <li>
             <Link href="/actors" color="secondary">
-              Search by actors
+              <b>Search by actors</b>
             </Link>
           </li>
 
           <li>
             <Link href="/shows" color="secondary">
-              Search by shows
+            <b>Search by shows</b>
             </Link>
           </li>
         </ul>

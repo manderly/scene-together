@@ -33,11 +33,11 @@ const YearFilters: React.FC<ISearchFilters> = ({ yearCutoff, handleChange }) => 
 
     return (
     <>
-    <InputLabel shrink id="yearCutoff-select-label">
+    <InputLabel id="yearCutoff-select-label">
       Only include shows from the past...
     </InputLabel>
 
-    <FormControl style={{minWidth: 220, marginRight: 50}}>
+    <FormControl variant="outlined" style={{minWidth: 260}}>
         <Select
             labelId="yearCutoff-select-label"
             id="yearCutoff-select"
@@ -52,6 +52,7 @@ const YearFilters: React.FC<ISearchFilters> = ({ yearCutoff, handleChange }) => 
             <option value={30}>30 years</option>
         </Select>
     </FormControl>
+    <br/><br/>
     </>
     )
 }

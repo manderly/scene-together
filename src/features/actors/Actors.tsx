@@ -152,14 +152,14 @@ const Actors: React.FC = () => {  // functional component
 		<div>
 			<form className={classes.root} noValidate autoComplete="off" onSubmit={ handleSubmit }>
 				{/* Instructions */}
-				<Box bgcolor="white">
+				<Box>
 				<Grid container spacing={2} direction="column" alignItems="center" justify="center">
 
 					<Grid item xs={12}>
 
 						<Box textAlign="center" pt={4}>
-							<Typography variant="h4">Search by actor names</Typography>
-							<p>Enter the names of two actors to find out what films they've worked on together.</p>
+							<Typography variant="h4" color="textPrimary">Search by actor names</Typography>
+							<Typography color="primary"><p>Enter the names of two actors to find out what films they've worked on together.</p></Typography>
 						</Box>
 
 						{/* Actor search fields */}
@@ -192,16 +192,17 @@ const Actors: React.FC = () => {  // functional component
 						</Box>
 
 						{/* Search filter fields */}
-						<Typography variant="h5">Search filters</Typography>
-
+						<Box p={2}>
+						<Typography variant="h6" color="textPrimary">Optional search filters</Typography>
+						<br/>
 						<YearFilters yearCutoff={yearCutoff} handleChange={changeYearCutoff}/>
 
 						<Grid item>
-							<MediaTypeCheckbox checked={includeTV} onChange={toggleTVCheckbox} label="TV shows" />
+							<MediaTypeCheckbox checked={includeTV} onChange={toggleTVCheckbox} label="Include TV shows" />
 						</Grid>
 
 						<Grid item>
-							<MediaTypeCheckbox checked={includeMovies} onChange={toggleMoviesCheckbox} label="Movies" />
+							<MediaTypeCheckbox checked={includeMovies} onChange={toggleMoviesCheckbox} label="Include movies" />
 						</Grid>
 
 						{/* Submit form button */}
@@ -210,6 +211,7 @@ const Actors: React.FC = () => {  // functional component
 								<Button variant="contained" color="primary" size="large" type="submit">Find shows in common!</Button>
 							</Box>
 						</Grid>
+						</Box>
 
 						</Grid>
 					</Grid>
@@ -217,15 +219,11 @@ const Actors: React.FC = () => {  // functional component
 			</form>
 
 			{/* only show this section once movieResults has data */}
-			{results && 
+			{results.length && 
 				<Grid container spacing={4} alignItems="center">
 					<Grid item xs={2}></Grid>
 
 					<Grid item xs={8}>
-						{/* Title varies with filters */}
-						<Typography variant="h4">
-							Shows in common
-						</Typography>
 
 						<ResultsList results={results} />
 
