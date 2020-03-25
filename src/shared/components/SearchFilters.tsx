@@ -1,12 +1,12 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import MediaTypeCheckbox from 'shared/components/MediaTypeCheckbox';
-import YearFilters from 'features/actors/components/YearFilters';
+import YearFilters from 'shared/components/YearFilters';
 
 // define the params here 
 interface ISearchFilters {
   yearCutoff: string;
-  handleYearCutoffChange: (event: any) => void; //(event: React.ChangeEvent<{ value: unknown }>
+  handleYearCutoffChange: (value: any) => void; //(event: React.ChangeEvent<{ value: unknown }>
   tvChecked: boolean;
   handleTVCheckedChange: (value: boolean) => void;
   moviesChecked: boolean;

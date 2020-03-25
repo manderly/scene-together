@@ -215,8 +215,6 @@ const Actors: React.FC = () => {  // functional component
 							</Grid>
 						</Box>
 
-						{/* Search filter fields */}
-
 						<Box p={2}>
 							<SearchFilters 
 								yearCutoff={yearCutoff}

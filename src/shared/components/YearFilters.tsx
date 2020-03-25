@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select } from '@material-ui/core';
+import { Select, MenuItem } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -46,10 +46,10 @@ const YearFilters: React.FC<ISearchFilters> = ({ yearCutoff, handleChange }) => 
             displayEmpty
             className={classes.selectEmpty}
           >
-            <option value="">All years</option>
-            <option value={5}>5 years</option>
-            <option value={15}>15 years</option>
-            <option value={30}>30 years</option>
+            <MenuItem value={''}>All years</MenuItem>
+            <MenuItem value={'5'}>5 years</MenuItem>
+            <MenuItem value={'15'}>15 years</MenuItem>
+            <MenuItem value={'30'}>30 years</MenuItem>
         </Select>
     </FormControl>
     <br/><br/>
