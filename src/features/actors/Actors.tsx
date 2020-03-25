@@ -224,13 +224,8 @@ const Actors: React.FC = () => {  // functional component
 						<br/>
 						<YearFilters yearCutoff={yearCutoff} handleChange={changeYearCutoff}/>
 
-						<Grid item>
-							<MediaTypeCheckbox checked={includeTV} onChange={toggleTVCheckbox} label="Include TV shows" />
-						</Grid>
-
-						<Grid item>
-							<MediaTypeCheckbox checked={includeMovies} onChange={toggleMoviesCheckbox} label="Include movies" />
-						</Grid>
+						<MediaTypeCheckbox checked={includeTV} onChange={toggleTVCheckbox} label="Include TV shows" />
+						<MediaTypeCheckbox checked={includeMovies} onChange={toggleMoviesCheckbox} label="Include movies" />
 
 						<SubmitFormButton buttonText="Find shows in common!" />
 
