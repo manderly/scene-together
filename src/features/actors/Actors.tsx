@@ -16,6 +16,7 @@ import YearFilters from './components/YearFilters';
 import { chooseExampleActorPair } from 'services/popularPairs';
 import Instructions from 'shared/components/Instructions';
 import SubmitFormButton from 'shared/components/SubmitFormButton';
+import ResultsContainer from 'shared/components/ResultsContainer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -230,7 +231,7 @@ const Actors: React.FC = () => {  // functional component
 						<Grid item>
 							<MediaTypeCheckbox checked={includeMovies} onChange={toggleMoviesCheckbox} label="Include movies" />
 						</Grid>
-						
+
 						<SubmitFormButton buttonText="Find shows in common!" />
 
 						<Button variant="contained" color="primary" onClick={loadTestData}>LOAD TEST DATA</Button>
@@ -241,32 +242,8 @@ const Actors: React.FC = () => {  // functional component
 					</Box>
 			</form>
 
-			<Grid container spacing={4} alignItems="center">
-				
-				{/* Title varies with filters */}
-				<Grid item xs={2}></Grid>
-				<Grid item xs={8}>
-					<Typography variant="h4" color="textSecondary">
-						{inCommonText}
-					</Typography>
-				</Grid>
-				<Grid item xs={2}></Grid>
-
-				{/* only show this section once movieResults has data */}
-				{results.length &&
-						<>
-						<Grid item xs={2}></Grid>
-
-						<Grid item xs={8}>
-							<ResultsList results={results} />
-						</Grid>
-
-						<Grid item xs={2}></Grid>
-						</>
-				}
-				
-			</Grid>
-
+			<ResultsContainer inCommonText={inCommonText} results={results}/>
+			
 		</div>
 	);
 }
