@@ -3,7 +3,6 @@ import { IMovieResult } from 'shared/models/movie.model';
 import ListItem from '@material-ui/core/ListItem';
 import { ITVShowResult } from 'shared/models/tvshow.model';
 import ShowDetails from './ShowDetails';
-import { Typography } from '@material-ui/core';
 
 // define the params here 
 interface IResultsList {
@@ -14,10 +13,6 @@ interface IResultsList {
 const ResultsList: React.FC<IResultsList> = ({ results }) => {
   return (
     <>
-      {/* Title varies with filters */}
-      <Typography variant="h4" color="textSecondary">
-        Shows in common
-      </Typography>
       {
         results.map((result: IMovieResult & ITVShowResult, index: number) => {
           // the result can be a movie or a tv show

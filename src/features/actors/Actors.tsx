@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -42,6 +42,7 @@ const Actors: React.FC = () => {  // functional component
 	const [actorID1, setActorID1] = useState<number | null>(0);
 	const [actorID2, setActorID2] = useState<number | null>(0);
 	const [results, setResults] = useState([]);
+	const [inCommonText, setInCommonText] = useState<string>('');
 
 	// we can also set error messages to display to the user
   const [actorNameError1, setActorNameError1] = useState<string | null>(null);
@@ -78,6 +79,12 @@ const Actors: React.FC = () => {  // functional component
 	React.useEffect(() => {
 		setExamplePair(chooseExampleActorPair()); // gets it from popularPairs service
 	}, []);
+
+	function loadTestData() {
+		let sampleData = '[{"id":559969,"character":"Jesse Pinkman","original_title":"El Camino: A Breaking Bad Movie","overview":"In the wake of his dramatic escape from captivity, Jesse Pinkman must come to terms with his past in order to forge some kind of future.","vote_count":2147,"video":false,"media_type":"movie","poster_path":"/ePXuKdXZuJx8hHMNr2yM4jY2L7Z.jpg","backdrop_path":"/2GUcUDSGqQSyIxe7xDxnVTfWQgq.jpg","popularity":40.571,"title":"El Camino: A Breaking Bad Movie","original_language":"en","genre_ids":[28,80,18,53],"vote_average":6.9,"adult":false,"release_date":"2019-10-11","credit_id":"5be34d7a0e0a2614ba01c2cb"},{"id":239459,"character":"Himself","original_title":"No Half Measures: Creating the Final Season of Breaking Bad","overview":"A documentary about the making of season five of the acclaimed AMC series Breaking Bad.","vote_count":77,"video":false,"media_type":"movie","poster_path":null,"backdrop_path":null,"popularity":3.755,"title":"No Half Measures: Creating the Final Season of Breaking Bad","original_language":"zh","genre_ids":[99],"vote_average":8.6,"adult":false,"release_date":"2013-11-26","credit_id":"52fe4e93c3a36847f8299e17"},{"id":238466,"character":"Himself","original_title":"David Blaine: Real or Magic","overview":"David Blaine\'s signature brand of street magic mystifies the most recognisable celebrities in the world, such as Jamie Foxx, Bryan Cranston, Aaron Paul, Ricky Gervais, Katy Perry, Woody Allen, and Robert DeNiro, to name a few. He goes to the homes of Kanye West and Harrison Ford, Will Smith and Olivia Wilde. He pays a visit to Stephen Hawking at his office in Cambridge University. Blaine also travels the world, astonishing people from all walks of life with never-before seen, inconceivable magic.","vote_count":59,"video":false,"media_type":"movie","poster_path":"/j5eamgRa6yJEmkOoxYu80dWkji3.jpg","backdrop_path":"/rc4uhKL1IhQE88cqJlfuoJPUBIC.jpg","popularity":8.532,"title":"David Blaine: Real or Magic","original_language":"en","genre_ids":[99],"vote_average":6.7,"adult":false,"release_date":"2013-11-19","credit_id":"52fe4e7dc3a36847f82938c7"},{"id":1396,"character":"Jesse Pinkman","episode_count":62,"overview":"When Walter White, a New Mexico chemistry teacher, is diagnosed with Stage III cancer and given a prognosis of only two years left to live. He becomes filled with a sense of fearlessness and an unrelenting desire to secure his family\'s financial future at any cost as he enters the dangerous world of drugs and crime.","origin_country":["US"],"original_name":"Breaking Bad","genre_ids":[18],"name":"Breaking Bad","media_type":"tv","backdrop_path":"/hbgPoI0GBrXJfGjYNV2fMQU0xou.jpg","popularity":65.528,"first_air_date":"2008-01-20","original_language":"en","vote_count":3973,"vote_average":8.5,"poster_path":"/1yeVJox3rjo2jBKrrihIMj7uoS9.jpg","credit_id":"52542282760ee31328001845"}]';
+		let sampleMatches = JSON.parse(sampleData);
+		setResults(sampleMatches);
+	}
 
 	const submitQuery = async () => {
 		var matches = [];
@@ -117,7 +124,7 @@ const Actors: React.FC = () => {  // functional component
 		});
 
 		matches.sort((a, b) => (a['release_date'] > b['release_date'] || a['first_air_date'] > b['first_air_date']) ? -1: 1);
-		console.log(matches);
+		console.log(JSON.stringify(matches));
 		setResults(matches);
 	};
 
@@ -141,16 +148,34 @@ const Actors: React.FC = () => {  // functional component
 		setActorName2(event.target.value);
 	};
 
+	function buildInCommonText() {
+		let showTypesStr = '';
+		if (includeMovies && includeTV) {
+			showTypesStr = 'Movies and TV shows';
+		} else if (includeMovies && !includeTV) {
+			showTypesStr = "Movies";
+		} else if (!includeMovies && includeTV) {
+			showTypesStr = "TV shows";
+		} else {
+			showTypesStr = "Nothing";
+		}
+
+		showTypesStr += " in common";
+	
+		return showTypesStr;
+	}
+
 	const handleSubmit = (event: any) => {
 		event.preventDefault();
 		if (formValidation()) {
+			setInCommonText(buildInCommonText());
 			submitQuery();
 		} // else, form contains errors
 	 }
 
   return (
 		<div>
-			<form className={classes.root} noValidate autoComplete="off" onSubmit={ handleSubmit }>
+			<form className={classes.root} noValidate onSubmit={ handleSubmit }>
 				{/* Instructions */}
 				<Box>
 				<Grid container spacing={2} direction="column" alignItems="center" justify="center">
@@ -159,7 +184,7 @@ const Actors: React.FC = () => {  // functional component
 
 						<Box textAlign="center" pt={4}>
 							<Typography variant="h4" color="textPrimary">Search by actor names</Typography>
-							<Typography color="primary"><p>Enter the names of two actors to find out what films they've worked on together.</p></Typography>
+							<Typography color="primary">Enter the names of two actors to find out what films they've worked on together.</Typography>
 						</Box>
 
 						{/* Actor search fields */}
@@ -210,6 +235,7 @@ const Actors: React.FC = () => {  // functional component
 							<Box textAlign="center" p={4}>
 								<Button variant="contained" color="primary" size="large" type="submit">Find shows in common!</Button>
 							</Box>
+							<Button variant="contained" color="primary" onClick={loadTestData}>LOAD TEST DATA</Button>
 						</Grid>
 						</Box>
 
@@ -218,20 +244,31 @@ const Actors: React.FC = () => {  // functional component
 					</Box>
 			</form>
 
-			{/* only show this section once movieResults has data */}
-			{results.length && 
-				<Grid container spacing={4} alignItems="center">
-					<Grid item xs={2}></Grid>
-
-					<Grid item xs={8}>
-
-						<ResultsList results={results} />
-
-					</Grid>
-
-					<Grid item xs={2}></Grid>
+			<Grid container spacing={4} alignItems="center">
+				
+				{/* Title varies with filters */}
+				<Grid item xs={2}></Grid>
+				<Grid item xs={8}>
+					<Typography variant="h4" color="textSecondary">
+						{inCommonText}
+					</Typography>
 				</Grid>
-			}
+				<Grid item xs={2}></Grid>
+
+				{/* only show this section once movieResults has data */}
+				{results.length &&
+						<>
+						<Grid item xs={2}></Grid>
+
+						<Grid item xs={8}>
+							<ResultsList results={results} />
+						</Grid>
+
+						<Grid item xs={2}></Grid>
+						</>
+				}
+				
+			</Grid>
 
 		</div>
 	);
