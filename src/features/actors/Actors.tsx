@@ -14,6 +14,8 @@ import ActorNameInput from './components/ActorNameInput';
 import YearFilters from './components/YearFilters';
 
 import { chooseExampleActorPair } from 'services/popularPairs';
+import Instructions from 'shared/components/Instructions';
+import SubmitFormButton from 'shared/components/SubmitFormButton';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -179,13 +181,12 @@ const Actors: React.FC = () => {  // functional component
 				{/* Instructions */}
 				<Box>
 				<Grid container spacing={2} direction="column" alignItems="center" justify="center">
-
 					<Grid item xs={12}>
 
-						<Box textAlign="center" pt={4}>
-							<Typography variant="h4" color="textPrimary">Search by actor names</Typography>
-							<Typography color="primary">Enter the names of two actors to find out what films they've worked on together.</Typography>
-						</Box>
+						<Instructions
+							title="Search by actor names"
+							subtitle="Enter the names of two actors to find out what films they've worked on together."
+						/>
 
 						{/* Actor search fields */}
 						<Box textAlign="center" p={2}>
@@ -229,14 +230,10 @@ const Actors: React.FC = () => {  // functional component
 						<Grid item>
 							<MediaTypeCheckbox checked={includeMovies} onChange={toggleMoviesCheckbox} label="Include movies" />
 						</Grid>
+						
+						<SubmitFormButton buttonText="Find shows in common!" />
 
-						{/* Submit form button */}
-						<Grid item>
-							<Box textAlign="center" p={4}>
-								<Button variant="contained" color="primary" size="large" type="submit">Find shows in common!</Button>
-							</Box>
-							<Button variant="contained" color="primary" onClick={loadTestData}>LOAD TEST DATA</Button>
-						</Grid>
+						<Button variant="contained" color="primary" onClick={loadTestData}>LOAD TEST DATA</Button>
 						</Box>
 
 						</Grid>
