@@ -4,19 +4,16 @@ import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-import MediaTypeCheckbox from 'shared/components/MediaTypeCheckbox';
-import ResultsList from 'features/actors/components/ResultsList';
-
-import { Typography, Box } from '@material-ui/core';
 import { getActorCredits } from 'services/actor';
 
 import ActorNameInput from './components/ActorNameInput';
-import YearFilters from './components/YearFilters';
 
 import { chooseExampleActorPair } from 'services/popularPairs';
 import Instructions from 'shared/components/Instructions';
 import SubmitFormButton from 'shared/components/SubmitFormButton';
 import ResultsContainer from 'shared/components/ResultsContainer';
+import SearchFilters from 'shared/components/SearchFilters';
+import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -219,18 +216,22 @@ const Actors: React.FC = () => {  // functional component
 						</Box>
 
 						{/* Search filter fields */}
+
 						<Box p={2}>
-						<Typography variant="h6" color="textPrimary">Optional search filters</Typography>
-						<br/>
-						<YearFilters yearCutoff={yearCutoff} handleChange={changeYearCutoff}/>
+							<SearchFilters 
+								yearCutoff={yearCutoff}
+								handleYearCutoffChange={changeYearCutoff}
+								tvChecked={includeTV}
+								handleTVCheckedChange={toggleTVCheckbox}
+								moviesChecked={includeMovies}
+								handleMoviesCheckedChange={toggleMoviesCheckbox}
+								/>
 
-						<MediaTypeCheckbox checked={includeTV} onChange={toggleTVCheckbox} label="Include TV shows" />
-						<MediaTypeCheckbox checked={includeMovies} onChange={toggleMoviesCheckbox} label="Include movies" />
-
-						<SubmitFormButton buttonText="Find shows in common!" />
+							<SubmitFormButton buttonText="Find shows in common!" />
+							
+						</Box>
 
 						<Button variant="contained" color="primary" onClick={loadTestData}>LOAD TEST DATA</Button>
-						</Box>
 
 						</Grid>
 					</Grid>
