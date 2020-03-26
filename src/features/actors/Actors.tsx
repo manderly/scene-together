@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import moment from 'moment';
 
 import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
 import { getActorCredits } from 'services/actor';
