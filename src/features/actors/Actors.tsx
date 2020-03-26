@@ -17,22 +17,7 @@ import ResultsContainer from 'shared/components/ResultsContainer';
 import SearchFilters from 'shared/components/SearchFilters';
 import { Box } from '@material-ui/core';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      '& > *': {
-        margin: theme.spacing(1)
-      },
-		},
-		formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-  }),
-);
-
 const Actors: React.FC = () => {  // functional component 
-	const classes = useStyles();
 
 	//const [movieResults, setMovieResults] = useState<IMovie | null>(null);
 	const [yearCutoff, setYearCutoff] = useState('');
@@ -223,7 +208,7 @@ const Actors: React.FC = () => {  // functional component
 
   return (
 		<div>
-			<form className={classes.root} noValidate onSubmit={ handleSubmit }>
+			<form noValidate onSubmit={ handleSubmit }>
 				{/* Instructions */}
 				<Box>
 				<Grid container spacing={2} direction="column" alignItems="center" justify="center">
