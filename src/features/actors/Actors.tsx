@@ -10,6 +10,8 @@ import { getActorCredits } from 'services/actor';
 import ActorNameInput from './components/ActorNameInput';
 
 import { chooseExampleActorPair } from 'services/popularPairs';
+import { buildInCommonText } from 'services/utils';
+
 import Instructions from 'shared/components/Instructions';
 import SubmitFormButton from 'shared/components/SubmitFormButton';
 import ResultsContainer from 'shared/components/ResultsContainer';
@@ -160,6 +162,7 @@ const Actors: React.FC = () => {  // functional component
 		setResults(matches);
 	};
 
+	// These are duplicated in Shows.tsx
 	const changeYearCutoff = (event: React.ChangeEvent<{ value: unknown }>) => {
     setYearCutoff(event.target.value as string);
 	};
@@ -180,27 +183,10 @@ const Actors: React.FC = () => {  // functional component
 		setActorName2(event.target.value);
 	};
 
-	function buildInCommonText() {
-		let showTypesStr = '';
-		if (includeMovies && includeTV) {
-			showTypesStr = 'Movies and TV shows';
-		} else if (includeMovies && !includeTV) {
-			showTypesStr = "Movies";
-		} else if (!includeMovies && includeTV) {
-			showTypesStr = "TV shows";
-		} else {
-			showTypesStr = "Nothing";
-		}
-
-		showTypesStr += " in common";
-	
-		return showTypesStr;
-	}
-
 	const handleSubmit = (event: any) => {
 		event.preventDefault();
 		if (formValidation()) {
-			setInCommonText(buildInCommonText());
+			setInCommonText(buildInCommonText(includeTV, includeMovies));
 			submitQuery();
 		} // else, form contains errors
 	 }

@@ -1,7 +1,6 @@
-
 /* Small "service" for returning popular actor and film pairs */
 
-const popularPairs = [
+const popularActorPairs = [
 	{name1: "Tom Hanks", name2: "Meg Ryan"},
 	{name1: "Emma Stone", name2: "Ryan Gosling"},
 	{name1: "Bradley Cooper", name2: "Jennifer Lawrence"},
@@ -19,6 +18,16 @@ const popularPairs = [
 	{name1: "Adam Sandler", name2: "Rob Schneider"},
 ];
 
+const popularShowPairs = [
+  {name1: 'Breaking Bad', name2: 'Malcom in the Middle'},
+  {name1: 'PeeWee\'s Playhouse', name2: 'The Matrix'},
+  {name1: 'The Lord of the Rings', name2: 'LOST'}
+];
+
 export const chooseExampleActorPair = () => {
-  return popularPairs[Math.floor(Math.random()*popularPairs.length)];
+  return popularActorPairs[Math.floor(Math.random()*popularActorPairs.length)];
+};
+
+export const chooseExampleShowPair = () => {
+  return popularShowPairs[Math.floor(Math.random()*popularShowPairs.length)];
 };
