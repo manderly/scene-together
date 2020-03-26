@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import moment from 'moment';
+
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -86,6 +88,53 @@ const Actors: React.FC = () => {  // functional component
 		setResults(sampleMatches);
 	}
 
+	function isWithinCutoff(date) {
+		let isWithinCutoffRange = false;
+		if (yearCutoff === '') {
+			isWithinCutoffRange = true;
+		} else {
+			let nowMinusCutoff = moment().subtract(yearCutoff, 'years').format('YYYY-MM-DD');
+			if (date < nowMinusCutoff) {
+				isWithinCutoffRange = false;
+			} else if (date >= nowMinusCutoff) {
+				isWithinCutoffRange = true;
+			} else {
+				console.log("Bad date state, check isWithinCutoff");
+			}
+		}
+
+		return isWithinCutoffRange;
+	}
+
+	function isMatch(val: any, res: any, paramStr: string) {
+		let isMatch = false;
+		if (res[paramStr] === val[paramStr]) {
+			isMatch = true;
+		}
+		return isMatch;
+	}
+
+	function isValidTVCredit(credit: any) {
+		let isValid = false;
+
+		if (includeTV && 
+					credit['media_type'] === 'tv' && 
+					credit['name'] !== undefined && 
+					credit['character'] !== '' &&
+					isWithinCutoff(credit['first_air_date'])) {
+			isValid = true;
+		}
+		return isValid;
+	}
+
+	function isValidMovieCredit(credit: any) {
+		let isValid = false;
+		if (includeMovies && credit['media_type'] === 'movie' && isWithinCutoff(credit['release_date'])) {
+			isValid = true;
+		}
+		return isValid;
+	}
+
 	const submitQuery = async () => {
 		var matches = [];
 
@@ -109,14 +158,13 @@ const Actors: React.FC = () => {  // functional component
 		// if media_type = "tv", then use "name"
 		// tv shows with an undefined name are talk shows 
 		actorCredits1.forEach((val) => {
-			// todo: check user's filters and don't show tv or movies if unchecked
-			if (includeTV && val['media_type'] === 'tv' && val['name'] !== undefined && val['character'] !== '') {
-				const match = actorCredits2.find((res) => res['name'] === val['name'] && res['name'] !== undefined && res['character'] !== '');
+			if (isValidTVCredit(val)) {
+				const match = actorCredits2.find((res) => isMatch(res, val, 'name') && isValidTVCredit(res));
 				if (match) {
 					matches.push(match);
 				}
-			} else if (includeMovies && val['media_type'] === 'movie') {
-				const match = actorCredits2.find((res) => res['title'] === val['title']);
+			} else if (includeMovies && isValidMovieCredit(val)) {
+				const match = actorCredits2.find((res) => isMatch(res, val, 'title'));
 				if (match) {
 					matches.push(match);
 				}
