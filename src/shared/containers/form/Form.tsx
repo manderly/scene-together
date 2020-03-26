@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import moment from 'moment';
 
 import { Box, Grid, Button } from '@material-ui/core';
 import ActorNameInput from 'features/actors/components/ActorNameInput';
@@ -96,7 +95,7 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
     } else {
       console.log("invalid search type, check Form.tsx");
     }
-  }, []);
+  }, [searchType]);
 
   const submitQuery = async () => {
     var matches = [];

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Form from 'shared/containers/form/Form';
 import Instructions from 'shared/components/Instructions';
 import { searchTypes } from 'shared/enums/enums';
