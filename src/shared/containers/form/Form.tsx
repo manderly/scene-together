@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 import { Box, Grid, Button } from '@material-ui/core';
-import ActorNameInput from 'features/actors/components/ActorNameInput';
+import NameInput from 'features/actors/components/NameInput';
 import SearchFilters from 'shared/components/SearchFilters';
 import SubmitFormButton from 'shared/components/SubmitFormButton';
 import ResultsContainer from 'shared/components/ResultsContainer';
 import { chooseExampleActorPair, chooseExampleShowPair } from 'services/popularPairs';
 
-import { buildInCommonText } from 'services/utils';
+import { buildInCommonText, sortShowsByReleaseDate } from 'services/utils';
 import { searchTypes } from 'shared/enums/enums';
 import { getActorCredits } from 'services/actor';
 
@@ -47,6 +47,9 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
   const formValidation = () => {
 		let isValid = false;
 
+    console.log(ID1);
+    console.log(ID2);
+    
     if (!ID1 || ID1 === 0) {
       setInputError1('Field cant be blank!');
 		}
@@ -97,8 +100,29 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
     }
   }, [searchType]);
 
-  const submitQuery = async () => {
+  const submitShowQuery = async () => {
     var matches = [];
+
+    /* Get the shows and find actors they have in common */
+    let showCredits1 = [];
+    let showCredits2 = [];
+
+    if (ID1) {
+      //showCredits1 = await getShowCredits(ID1);
+    }
+
+    if (ID2) {
+      //showCredits2 = await getShowCredits(ID2);
+    }
+
+    console.log(showCredits1);
+    console.log(showCredits2);
+
+  }
+
+  const submitActorQuery = async () => {
+    //var matches = [];
+    let matches : any[] = [];
 
     /* Get the actor credits and find overlaps */
     let actorCredits1 = [];
@@ -129,9 +153,9 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
       }
     });
 
-    matches.sort((a, b) => (a['release_date'] > b['release_date'] || a['first_air_date'] > b['first_air_date']) ? -1: 1);
+    matches = sortShowsByReleaseDate(matches);
     console.log(JSON.stringify(matches));
-    setResults(matches);
+    setResults(matches as []);
   };
 
   // these are exactly the same in Actors.tsx and should be moved somewhere both Actors and Shows can access
@@ -160,10 +184,11 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
 		if (formValidation()) {
       if (searchType === searchTypes.byActors) {
         setInCommonText(buildInCommonText(includeMovies, includeTV));
+        submitActorQuery();
       } else if (searchType === searchTypes.byShows) {
         setInCommonText('Actors in common');
+        submitShowQuery();
       }
-      submitQuery();
     }
   }
 
@@ -179,25 +204,27 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
             <Box textAlign="center" p={2}>
               <Grid container spacing={2} direction="row">
                 <Grid item xs={12} md={6}>
-                  <ActorNameInput 
+                  <NameInput 
                     id="input-1" 
                     label={labelText['label1']}
                     exampleName={examplePair['name1']}
                     name={name1}
                     handleChange={inputName1}
-                    setActorID={setID1}
+                    setID={setID1}
+                    searchType={searchType}
                     error={inputError1}
                   />
                 </Grid>
 
                 <Grid item xs={12} md={6}>
-                  <ActorNameInput 
+                  <NameInput 
                     id="input-2" 
                     label={labelText['label2']}
                     exampleName={examplePair['name2']}
                     name={name2}
                     handleChange={inputName2}
-                    setActorID={setID2}
+                    setID={setID2}
+                    searchType={searchType}
                     error={inputError2}
                   />
                 </Grid>

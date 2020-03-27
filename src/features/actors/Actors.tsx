@@ -159,6 +159,7 @@ const Actors: React.FC = () => {  // functional component
 
 		matches.sort((a, b) => (a['release_date'] > b['release_date'] || a['first_air_date'] > b['first_air_date']) ? -1: 1);
 		console.log(JSON.stringify(matches));
+
 		setResults(matches);
 	};
 
