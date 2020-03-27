@@ -13,6 +13,7 @@ import { getActorCredits } from 'services/actor';
 import { getTVShowCredits } from 'services/show';
 
 import { isValidMovieCredit, isValidTVCredit, isMatch } from 'services/validations';
+import { Show } from 'shared/models/show.model';
 
 // define the params here 
 interface IForm {
@@ -25,8 +26,8 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
 	const [includeTV, setIncludeTV] = useState(true);
   const [includeMovies, setIncludeMovies] = useState(true);
 
-  const [ID1, setID1] = useState<number | null>(0);
-  const [ID2, setID2] = useState<number | null>(0);
+  const [value1, setValue1] = useState<Show | null>(null);
+  const [value2, setValue2] = useState<Show | null>(null);
 
   const [name1, setName1] = useState('');
   const [name2, setName2] = useState('');
@@ -48,26 +49,26 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
   const formValidation = () => {
 		let isValid = false;
 
-    console.log(ID1);
-    console.log(ID2);
+    console.log(value1);
+    console.log(value2);
 
-    if (!ID1 || ID1 === 0) {
+    if (!value1 || value1.id === 0) {
       setInputError1('Field cant be blank!');
 		}
 		
-		if (!ID2 || ID2 === 0) {
+		if (!value2 || value2.id === 0) {
 			setInputError2('Field cant be blank!');
 		}
 
-		if (ID1 && ID1 > 0) {
+		if (value1 && value1.id > 0) {
       setInputError1(null);
 		}
 
-		if (ID2 && ID2 > 0) {
+		if (value2 && value2.id > 0) {
 			setInputError2(null);
 		}
 
-		if (ID1 && ID2) {
+		if (value1 && value1.id && value2 && value2.id) {
 			isValid = true;
 		}
 
@@ -108,16 +109,22 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
     let showCredits1 = [];
     let showCredits2 = [];
 
-    if (ID1) {
-      // if tv show, run tv query
-      // if movie, run movie query 
-      showCredits1 = await getTVShowCredits(ID1);
+    if (value1) {
+      if (value1.media_type == "tv") {
+        showCredits1 = await getTVShowCredits(value1.id);
+      } else if (value1.media_type == "movie") {
+        // get movie credits 
+        console.log("this is a movie");
+      }
     }
 
-    if (ID2) {
-      // if tv show, run tv query
-      // if movie, run movie query 
-      showCredits2 = await getTVShowCredits(ID2);
+    if (value2) {
+      if (value2.media_type == "tv") {
+        showCredits2 = await getTVShowCredits(value2.id);
+      } else if (value2.media_type == "movie") {
+        // get movie credits 
+        console.log("this is a movie");
+      }
     }
 
     console.log(showCredits1);
@@ -133,12 +140,12 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
     let actorCredits1 = [];
     let actorCredits2 = [];
 
-    if (ID1) {
-      actorCredits1 = await getActorCredits(ID1);
+    if (value1) {
+      actorCredits1 = await getActorCredits(value1.id);
     }
 
-    if (ID2) {
-      actorCredits2 = await getActorCredits(ID2);
+    if (value2) {
+      actorCredits2 = await getActorCredits(value2.id);
     }
 
     // if media_type = "movie", then use "title"
@@ -215,7 +222,7 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
                     exampleName={examplePair['name1']}
                     name={name1}
                     handleChange={inputName1}
-                    setID={setID1}
+                    setValue={setValue1}
                     searchType={searchType}
                     error={inputError1}
                   />
@@ -228,7 +235,7 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
                     exampleName={examplePair['name2']}
                     name={name2}
                     handleChange={inputName2}
-                    setID={setID2}
+                    setValue={setValue2}
                     searchType={searchType}
                     error={inputError2}
                   />

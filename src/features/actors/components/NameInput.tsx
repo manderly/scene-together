@@ -5,23 +5,11 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import useDebounce from 'shared/hooks/useDebounce';
 import { findActorByName } from 'services/actor';
 import { findShowByName } from 'services/show';
+import { Show } from 'shared/models/show.model';
 
 import { sortShowsByPopularity } from 'services/utils';
 
 import { searchTypes } from 'shared/enums/enums';
-
-interface Actor {
-  name: string;
-  id: number;
-}
-
-interface Result {
-  name: string;
-  id: number;
-  date: string;
-  media_type: string;
-  popularity: number;
-}
 
 interface INameInput {
     id: string;
@@ -29,7 +17,7 @@ interface INameInput {
     handleChange: (value: any) => void;
     label: string;
     exampleName: string;
-    setID: (id: number) => void;
+    setValue: (value: Show | null) => void;
     searchType: searchTypes;
     error?: string | null;  // the ? indicates that error is optional
 }
@@ -38,10 +26,10 @@ function assembleHelptext(exampleName: string) {
   return `ex: "${exampleName}"`;
 };
 
-const NameInput: React.FC<INameInput> = ({ id, error, label, exampleName, setID, searchType }) => {
+const NameInput: React.FC<INameInput> = ({ id, error, label, exampleName, setValue, searchType }) => {
   const [userInput, setUserInput] = React.useState('');
   const [open, setOpen] = React.useState(false);
-  const [options, setOptions] = React.useState<Result[]>([]);
+  const [options, setOptions] = React.useState<Show[]>([]);
   const loading = open && options.length === 0;
 
   const debouncedUserInput = useDebounce(userInput, 250);
@@ -57,7 +45,7 @@ const NameInput: React.FC<INameInput> = ({ id, error, label, exampleName, setID,
           let response = await findActorByName(debouncedUserInput); //IActor
           const actors = response.results;
           // populates the dropdown list of actors with names like the search query
-          setOptions(Object.keys(actors).map(key => actors[key]) as Result[]);
+          setOptions(Object.keys(actors).map(key => actors[key]) as Show[]);
         } else if (searchType == searchTypes.byShows) {
           let response = await findShowByName(debouncedUserInput); //IMovie & ITVShow
           const shows = response.results;
@@ -89,7 +77,7 @@ const NameInput: React.FC<INameInput> = ({ id, error, label, exampleName, setID,
           // put the most popular ones at top 
           processedShows = sortShowsByPopularity(processedShows);
 
-          setOptions(Object.keys(processedShows).map(key => processedShows[key]) as Result[]);
+          setOptions(Object.keys(processedShows).map(key => processedShows[key]) as Show[]);
           //setOptions(Object.keys(shows).map(key => shows[key] as Show[]));
         }
       })();
@@ -127,11 +115,10 @@ const NameInput: React.FC<INameInput> = ({ id, error, label, exampleName, setID,
           }
         }}
         onChange={(event: object, value: any, reason: string) => {
-          console.log(value);
-          if (value.id) {
-            setID(value.id)
+          if (value) {
+            setValue(value);
           } else {
-            setID(0);
+            setValue(null);
           }
         }}
         onClose={() => {
