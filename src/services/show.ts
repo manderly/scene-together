@@ -15,10 +15,29 @@ export const findShowByName = async (name: string = ''): Promise<IMovie & ITVSho
   return result.data;
 }
 
+export const getTVShowSeasonCount = async (id: number): Promise<number> => {
+  const result = await getAPI(`3/tv/${id}`, {});
+  return result.data.seasons.length;
+}
+
 export const getTVShowCredits = async (id: number): Promise<[]> => {
+  //const params = {
+  //  'append_to_response': 'credits',
+  //};
+  const result = await getAPI(`3/tv/${id}/credits`, {});
+  return result.data.cast;
+}
+
+export const getTVShowCreditsBySeason = async (id: number, seasonNumber: number): Promise<[]> => {
   const params = {
     'append_to_response': 'credits',
   };
-  const result = await getAPI(`3/tv/${id}`, params);
+  const result = await getAPI(`3/tv/${id}/season/${seasonNumber}`, params);
   return result.data.credits.cast;
+}
+
+
+export const getMovieCredits = async (id: number): Promise<[]> => {
+  const result = await getAPI(`3/movie/${id}/credits`, {});
+  return result.data.cast;
 }

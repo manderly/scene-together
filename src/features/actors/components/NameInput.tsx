@@ -41,15 +41,14 @@ const NameInput: React.FC<INameInput> = ({ id, error, label, exampleName, setVal
   React.useEffect(() => {
     if (debouncedUserInput.length >= 3) {
       (async () => {
-        if (searchType == searchTypes.byActors) {
+        if (searchType === searchTypes.byActors) {
           let response = await findActorByName(debouncedUserInput); //IActor
           const actors = response.results;
           // populates the dropdown list of actors with names like the search query
           setOptions(Object.keys(actors).map(key => actors[key]) as Show[]);
-        } else if (searchType == searchTypes.byShows) {
+        } else if (searchType === searchTypes.byShows) {
           let response = await findShowByName(debouncedUserInput); //IMovie & ITVShow
           const shows = response.results;
-          console.log(shows);
 
           let processedShows : any[] = [];
           shows.forEach((show) => {

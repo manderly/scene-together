@@ -20,6 +20,7 @@ export function isWithinCutoff(yearCutoff: string, date) {
 
 export function isMatch(val: any, res: any, paramStr: string) {
   let isMatch = false;
+
   if (res[paramStr] === val[paramStr]) {
     isMatch = true;
   }
