@@ -14,3 +14,11 @@ export const findShowByName = async (name: string = ''): Promise<IMovie & ITVSho
   const result = await getAPI('3/search/multi', params);
   return result.data;
 }
+
+export const getTVShowCredits = async (id: number): Promise<[]> => {
+  const params = {
+    'append_to_response': 'credits',
+  };
+  const result = await getAPI(`3/tv/${id}`, params);
+  return result.data.credits.cast;
+}

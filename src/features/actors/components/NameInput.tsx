@@ -127,6 +127,7 @@ const NameInput: React.FC<INameInput> = ({ id, error, label, exampleName, setID,
           }
         }}
         onChange={(event: object, value: any, reason: string) => {
+          console.log(value);
           if (value.id) {
             setID(value.id)
           } else {

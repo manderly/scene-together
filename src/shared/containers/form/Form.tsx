@@ -10,6 +10,7 @@ import { chooseExampleActorPair, chooseExampleShowPair } from 'services/popularP
 import { buildInCommonText, sortShowsByReleaseDate } from 'services/utils';
 import { searchTypes } from 'shared/enums/enums';
 import { getActorCredits } from 'services/actor';
+import { getTVShowCredits } from 'services/show';
 
 import { isValidMovieCredit, isValidTVCredit, isMatch } from 'services/validations';
 
@@ -49,7 +50,7 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
 
     console.log(ID1);
     console.log(ID2);
-    
+
     if (!ID1 || ID1 === 0) {
       setInputError1('Field cant be blank!');
 		}
@@ -108,11 +109,15 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
     let showCredits2 = [];
 
     if (ID1) {
-      //showCredits1 = await getShowCredits(ID1);
+      // if tv show, run tv query
+      // if movie, run movie query 
+      showCredits1 = await getTVShowCredits(ID1);
     }
 
     if (ID2) {
-      //showCredits2 = await getShowCredits(ID2);
+      // if tv show, run tv query
+      // if movie, run movie query 
+      showCredits2 = await getTVShowCredits(ID2);
     }
 
     console.log(showCredits1);
