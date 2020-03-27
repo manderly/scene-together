@@ -3,10 +3,12 @@ import { IMovieResult } from 'shared/models/movie.model';
 import ListItem from '@material-ui/core/ListItem';
 import { ITVShowResult } from 'shared/models/tvshow.model';
 import ShowDetails from './ShowDetails';
+import { searchTypes } from 'shared/enums/enums';
 
 // define the params here 
 interface IResultsList {
     results: Array<IMovieResult & ITVShowResult>;
+    searchType: searchTypes;
 }
 
 /* Needs a root node, so <>  </> serves that purpose here */
@@ -18,6 +20,9 @@ const ResultsList: React.FC<IResultsList> = ({ results }) => {
           // the result can be a movie or a tv show
           // the "&" here sorta combines them into one model, conceptually
           // and it's up to us to pick the right params to display for primary and secondary
+
+          // TODO: if searchType is actors vs. shows 
+           
           return (
             <ListItem key={index}>
               <ShowDetails 

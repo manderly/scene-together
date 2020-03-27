@@ -162,10 +162,36 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
     console.log("Now find any objects that share an ID and return just those");
     // could maybe do this more efficiently than stepping through the second array start to finish for each element in the first array
     showCredits1.forEach((val) => {
-      const match = showCredits2.find((res) => isMatch(res, val, 'id'));
-        if (match) {
-          matches.push(match);
+
+      let combinedMatch = {};
+
+      const match = showCredits2.find((res) => {
+        if (isMatch(res, val, 'id')) {
+          // found the same actor in both lists of shows
+
+          console.log(val);
+          console.log(res);
+
+          combinedMatch['id'] = val.id;
+          combinedMatch['name'] = val.name;
+          combinedMatch['characterName1'] = val.character;
+          combinedMatch['characterName2'] = res.character;
+          combinedMatch['showName1'] = value1?.name;
+          combinedMatch['showName2'] = value2?.name;
+
+          return true;
         }
+      });
+
+      if (match) {
+
+        console.log("formatted match: ");
+        console.log(combinedMatch);
+        matches.push(combinedMatch);
+
+        // old way
+        //matches.push(match);
+      }
     });
 
     //matches = sortActorsByPopularity(matches);
@@ -309,7 +335,7 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
           </Box>
       </form>
 
-      <ResultsContainer inCommonText={inCommonText} results={results}/>
+      <ResultsContainer inCommonText={inCommonText} results={results} searchType={searchType}/>
       
     </div>
   );
