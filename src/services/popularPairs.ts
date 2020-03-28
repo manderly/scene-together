@@ -20,8 +20,10 @@ const popularActorPairs = [
 
 const popularShowPairs = [
   {name1: 'Breaking Bad', name2: 'Malcom in the Middle'},
-  {name1: 'PeeWee\'s Playhouse', name2: 'The Matrix'},
-  {name1: 'The Lord of the Rings', name2: 'LOST'}
+  {name1: 'John Wick', name2: 'The Matrix'},
+	{name1: 'The Lord of the Rings', name2: 'Lost'},
+	{name1: 'Harry Potter', name2: 'Games of Thrones'},
+	{name1: 'You\'ve Got Mail', name2: 'Sleepless in Seattle'}
 ];
 
 export const chooseExampleActorPair = () => {
