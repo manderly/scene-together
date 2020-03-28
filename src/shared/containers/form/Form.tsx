@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Box, Grid, Button } from '@material-ui/core';
+import { Box, Grid, Button, Link } from '@material-ui/core';
 import NameInput from 'features/actors/components/NameInput';
 import SearchFilters from 'shared/components/SearchFilters';
 import SubmitFormButton from 'shared/components/SubmitFormButton';
@@ -352,9 +352,13 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
               }
 
               <SubmitFormButton buttonText={buttonText} />
+              
+              <Grid item>
+                <Box textAlign="center">
+                  <Link color="primary" variant="body2" onClick={loadTestData}>Load Test Data</Link>
+                </Box></Grid>
+      
             </Box>
-
-            <Button variant="contained" color="primary" onClick={loadTestData}>LOAD TEST DATA</Button>
 
             </Grid>
           </Grid>
