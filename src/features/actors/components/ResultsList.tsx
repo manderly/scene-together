@@ -34,15 +34,21 @@ const ResultsList: React.FC<IResultsList> = ({ results, searchType }) => {
                 showType={result?.media_type ?? result?.media_type}
                 actorName1={result?.actorName1}
                 actorName2={result?.actorName2}
+                actorID1={result?.actorID1}
+                actorID2={result?.actorID2}
                 characterName1={result?.characterName1}
                 characterName2={result?.characterName2}
               />}
 
-              {searchType === searchTypes.byShows && <ActorDetails
+              {searchType === searchTypes.byShows && <ActorDetails 
                 id={result?.id}
                 name={result?.name}
                 showName1={result?.showName1}
                 showName2={result?.showName2}
+                showID1={result?.showID1}
+                showID2={result?.showID2}
+                showType1={result?.showType1}
+                showType2={result?.showType2}
                 characterName1={result?.characterName1}
                 characterName2={result?.characterName2}
               />}

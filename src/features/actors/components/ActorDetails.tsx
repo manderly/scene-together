@@ -11,6 +11,10 @@ interface IActorDetails {
   name: string;
   showName1: string;
   showName2: string;
+  showID1: number;
+  showID2: number;
+  showType1: string;
+  showType2: string;
   characterName1: string;
   characterName2: string;
 }
@@ -32,8 +36,12 @@ function getActorProfileLink(id: number, name: string) {
     return <a href={"https://www.themoviedb.org/person/"+id}>{name}</a>
 }
 
+function getShowLink(id: number, name: string, showType: string) {
+  return <a href={"https://www.themoviedb.org/"+showType+"/"+id}>{name}</a>
+}
+
 /* Needs a root node, so <>  </> serves that purpose here */
-const ActorDetails: React.FC<IActorDetails> = ({ id, name, showName1, showName2, characterName1, characterName2 }) => {
+const ActorDetails: React.FC<IActorDetails> = ({ id, name, showName1, showName2, showID1, showID2, showType1, showType2, characterName1, characterName2 }) => {
   const classes = useStyles();
 
   return (
@@ -49,8 +57,8 @@ const ActorDetails: React.FC<IActorDetails> = ({ id, name, showName1, showName2,
           subheader={"Actor"} // could be expanded to roles beyond acting 
         />
         <br/>
-        <Typography><b>{showName1}</b> as {characterName1}</Typography>
-        <Typography><b>{showName2}</b> as {characterName2}</Typography>
+        <Typography><b>{getShowLink(showID1, showName1, showType1)}</b> as {characterName1}</Typography>
+        <Typography><b>{getShowLink(showID2, showName2, showType2)}</b> as {characterName2}</Typography>
       </CardContent>
     </Card>
   )

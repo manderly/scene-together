@@ -13,6 +13,8 @@ interface IShowDetails {
   showType: string;
   actorName1: string;
   actorName2: string;
+  actorID1: number;
+  actorID2: number;
   characterName1: string;
   characterName2: string;
 }
@@ -33,12 +35,16 @@ const useStyles = makeStyles({
   }
 });
 
-function getShowDetailsLink(id: number, showType: string, showName: string) {
-  return <a href={"https://www.themoviedb.org/"+showType+"/"+id}>{showName}</a>
+function getActorProfileLink(id: number, name: string) {
+  return <a href={"https://www.themoviedb.org/person/"+id}>{name}</a>
+}
+
+function getShowLink(id: number, name: string, showType: string) {
+return <a href={"https://www.themoviedb.org/"+showType+"/"+id}>{name}</a>
 }
 
 /* Needs a root node, so <>  </> serves that purpose here */
-const ShowDetails: React.FC<IShowDetails> = ({ id, showName, showDate, showType, actorName1, actorName2, characterName1, characterName2 }) => {
+const ShowDetails: React.FC<IShowDetails> = ({ id, showName, showDate, showType, actorName1, actorName2, actorID1, actorID2, characterName1, characterName2 }) => {
   const classes = useStyles();
 
   return (
@@ -50,12 +56,12 @@ const ShowDetails: React.FC<IShowDetails> = ({ id, showName, showDate, showType,
               <ShowTypeIcon showType={showType}/>
             </Avatar>
           }
-          title={getShowDetailsLink(id, showType, showName)}
+          title={getShowLink(id, showName, showType)}
           subheader={<span>{showType === "movie" ? "Release date:" : "First aired:"} <Moment format="MMMM D, YYYY">{showDate}</Moment></span>}
         />
         <br/>
-        <Typography><b>{actorName1}</b> as {characterName1}</Typography>
-        <Typography><b>{actorName2}</b> as {characterName2}</Typography>
+        <Typography><b>{getActorProfileLink(actorID1, actorName1)}</b> as {characterName1}</Typography>
+        <Typography><b>{getActorProfileLink(actorID2, actorName2)}</b> as {characterName2}</Typography>
       </CardContent>
     </Card>
   )

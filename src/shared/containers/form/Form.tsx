@@ -77,7 +77,7 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
     if (searchType === searchTypes.byActors) {
       sampleData = '[{"id":559969,"title":"El Camino: A Breaking Bad Movie","media_type":"movie","release_date":"2019-10-11","actorName1":"Bryan Cranston","actorName2":"Aaron Paul","characterName1":"Walter White","characterName2":"Jesse Pinkman"},{"id":239459,"title":"No Half Measures: Creating the Final Season of Breaking Bad","media_type":"movie","release_date":"2013-11-26","actorName1":"Bryan Cranston","actorName2":"Aaron Paul","characterName1":"Himself","characterName2":"Himself"},{"id":238466,"title":"David Blaine: Real or Magic","media_type":"movie","release_date":"2013-11-19","actorName1":"Bryan Cranston","actorName2":"Aaron Paul","characterName1":"Himself","characterName2":"Himself"},{"id":1396,"name":"Breaking Bad","media_type":"tv","first_air_date":"2008-01-20","actorName1":"Bryan Cranston","actorName2":"Aaron Paul","characterName1":"Walter White","characterName2":"Jesse Pinkman"}]';
     } else if (searchType === searchTypes.byShows) {
-      sampleData = '[{"id":31,"name":"Tom Hanks","characterName1":"Joe Fox","characterName2":"Sam Baldwin","showName1":"You\'ve Got Mail","showName2":"Sleepless in Seattle"},{"id":5344,"name":"Meg Ryan","characterName1":"Kathleen Kelly","characterName2":"Annie Reed","showName1":"You\'ve Got Mail","showName2":"Sleepless in Seattle"},{"id":1010,"name":"Michael Badalucco","characterName1":"Charlie","characterName2":"New York Taxi Dispatcher (as Mike Badalucco)","showName1":"You\'ve Got Mail","showName2":"Sleepless in Seattle"}]';
+      sampleData = '[{"id":31,"name":"Tom Hanks","characterName1":"Sam Baldwin","characterName2":"Joe Fox","showName1":"Sleepless in Seattle","showName2":"You\'ve Got Mail","showID1":858,"showID2":9489,"showType1":"movie","showType2":"movie"},{"id":5344,"name":"Meg Ryan","characterName1":"Annie Reed","characterName2":"Kathleen Kelly","showName1":"Sleepless in Seattle","showName2":"You\'ve Got Mail","showID1":858,"showID2":9489,"showType1":"movie","showType2":"movie"},{"id":1010,"name":"Michael Badalucco","characterName1":"New York Taxi Dispatcher (as Mike Badalucco)","characterName2":"Charlie","showName1":"Sleepless in Seattle","showName2":"You\'ve Got Mail","showID1":858,"showID2":9489,"showType1":"movie","showType2":"movie"}]';
     }
 
 		let sampleMatches = JSON.parse(sampleData);
@@ -172,7 +172,10 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
           combinedMatch['characterName2'] = res.character;
           combinedMatch['showName1'] = value1?.name;
           combinedMatch['showName2'] = value2?.name;
-
+          combinedMatch['showID1'] = value1?.id; // get show ID from the state
+          combinedMatch['showID2'] = value2?.id; 
+          combinedMatch['showType1'] = value1?.media_type;
+          combinedMatch['showType2'] = value2?.media_type;
           return true;
         }
       });
@@ -222,7 +225,9 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
             combinedMatch['media_type'] = val.media_type;
             combinedMatch['first_air_date'] = val.first_air_date; // tv shows use 'first air date'
             combinedMatch['actorName1'] = value1?.name; // get actor 1's name from state
-            combinedMatch['actorName2'] = value2?.name; // get actor 2's name from state
+            combinedMatch['actorName2'] = value2?.name; 
+            combinedMatch['actorID1'] = value1?.id; // get actor ID from state
+            combinedMatch['actorID2'] = value2?.id; 
             combinedMatch['characterName1'] = val.character;
             combinedMatch['characterName2'] = res.character;
 
@@ -240,7 +245,9 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
             combinedMatch['media_type'] = val.media_type;
             combinedMatch['release_date'] = val.release_date; // movies use 'release date'
             combinedMatch['actorName1'] = value1?.name; // get actor 1's name from state
-            combinedMatch['actorName2'] = value2?.name; // get actor 2's name from state
+            combinedMatch['actorName2'] = value2?.name; 
+            combinedMatch['actorID1'] = value1?.id; // get actor ID from state
+            combinedMatch['actorID2'] = value2?.id; 
             combinedMatch['characterName1'] = val.character;
             combinedMatch['characterName2'] = res.character;
 
@@ -283,7 +290,8 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
     event.preventDefault();
 		if (formValidation()) {
       if (searchType === searchTypes.byActors) {
-        setInCommonText(buildInCommonText(includeMovies, includeTV));
+        setInCommonText("These actors appear together in:");
+        //setInCommonText(buildInCommonText(includeMovies, includeTV));
         submitActorQuery();
       } else if (searchType === searchTypes.byShows) {
         setInCommonText('Actors in common');

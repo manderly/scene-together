@@ -12,6 +12,10 @@ export interface IActorResult {
     characterName2: string;
     showName1: string;
     showName2: string;
+    showID1: number;
+    showID2: number;
+    showType1: string;
+    showType2: string;
 }
 
 export interface IActorCredits {

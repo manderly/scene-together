@@ -1,4 +1,5 @@
 /* Utility functions shared by both Actors and Shows pages */
+import React from 'react';
 
 import { IMovie } from "shared/models/movie.model";
 import { ITVShow } from "shared/models/tvshow.model";
