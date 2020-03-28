@@ -37,6 +37,7 @@ const ResultsList: React.FC<IResultsList> = ({ results, searchType }) => {
               />}
 
               {searchType === searchTypes.byShows && <ActorDetails
+                id={result?.id}
                 name={result?.name}
                 showName1={result?.showName1}
                 showName2={result?.showName2}

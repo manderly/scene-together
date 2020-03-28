@@ -7,6 +7,7 @@ import { pink } from '@material-ui/core/colors';
 
 // define the params here 
 interface IActorDetails {
+  id: number;
   name: string;
   showName1: string;
   showName2: string;
@@ -27,13 +28,17 @@ const useStyles = makeStyles({
   }
 });
 
+function getActorProfileLink(id: number) {
+    return <a href={"https://www.themoviedb.org/person/"+id}>Profile and Filmography</a>
+}
+
 /* Needs a root node, so <>  </> serves that purpose here */
-const ActorDetails: React.FC<IActorDetails> = ({ name, showName1, showName2, characterName1, characterName2 }) => {
+const ActorDetails: React.FC<IActorDetails> = ({ id, name, showName1, showName2, characterName1, characterName2 }) => {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <CardContent>
+      <CardContent className="resultsCard">
         <CardHeader 
           avatar={
             <Avatar className={classes.avatar}>
@@ -41,7 +46,7 @@ const ActorDetails: React.FC<IActorDetails> = ({ name, showName1, showName2, cha
             </Avatar>
           }
           title={name}
-          subheader='Something useful here'
+          subheader={getActorProfileLink(id)}
         />
         <br/>
         <Typography><b>{showName1}</b> as {characterName1}</Typography>
