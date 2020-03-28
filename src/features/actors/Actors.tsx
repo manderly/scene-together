@@ -255,7 +255,7 @@ const Actors: React.FC = () => {  // functional component
 					</Box>
 			</form>
 
-			<ResultsContainer inCommonText={inCommonText} results={results}/>
+			{/*<ResultsContainer inCommonText={inCommonText} results={results}/>*/}
 			
 		</div>
 	);
