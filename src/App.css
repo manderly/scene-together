@@ -49,3 +49,12 @@ body {
 .resultsCard p {
   font-size: 14px !important;
 }
+
+.resultsCardHeader a {
+  color: primary;
+  text-decoration: none;
+}
+
+.resultsCardHeader a:hover {
+  text-decoration: underline;
+}

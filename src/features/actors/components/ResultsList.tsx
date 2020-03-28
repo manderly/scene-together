@@ -25,15 +25,17 @@ const ResultsList: React.FC<IResultsList> = ({ results, searchType }) => {
           // the result can be a movie or a tv show
           // the "&" here sorta combines them into one model, conceptually
           // and it's up to us to pick the right params to display for primary and secondary
-
-          // TODO: if searchType is actors vs. shows 
-          console.log(searchType);
           return (
             <ListItem key={index}>
-              {searchType === searchTypes.byActors && <ShowDetails 
+              {searchType === searchTypes.byActors && <ShowDetails
+                id={result?.id}
                 showName={result?.title ?? result?.name}
                 showDate={result?.release_date ?? result?.first_air_date}
                 showType={result?.media_type ?? result?.media_type}
+                actorName1={result?.actorName1}
+                actorName2={result?.actorName2}
+                characterName1={result?.characterName1}
+                characterName2={result?.characterName2}
               />}
 
               {searchType === searchTypes.byShows && <ActorDetails

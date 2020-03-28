@@ -28,8 +28,8 @@ const useStyles = makeStyles({
   }
 });
 
-function getActorProfileLink(id: number) {
-    return <a href={"https://www.themoviedb.org/person/"+id}>Profile and Filmography</a>
+function getActorProfileLink(id: number, name: string) {
+    return <a href={"https://www.themoviedb.org/person/"+id}>{name}</a>
 }
 
 /* Needs a root node, so <>  </> serves that purpose here */
@@ -39,14 +39,14 @@ const ActorDetails: React.FC<IActorDetails> = ({ id, name, showName1, showName2,
   return (
     <Card className={classes.root}>
       <CardContent className="resultsCard">
-        <CardHeader 
+        <CardHeader className="resultsCardHeader"
           avatar={
             <Avatar className={classes.avatar}>
               <PersonIcon />
             </Avatar>
           }
-          title={name}
-          subheader={getActorProfileLink(id)}
+          title={getActorProfileLink(id, name)}
+          subheader={"Actor"} // could be expanded to roles beyond acting 
         />
         <br/>
         <Typography><b>{showName1}</b> as {characterName1}</Typography>

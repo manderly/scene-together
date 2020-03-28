@@ -75,7 +75,7 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
   function loadTestData() {
     let sampleData = '';
     if (searchType === searchTypes.byActors) {
-      sampleData = '[{"id":559969,"character":"Jesse Pinkman","original_title":"El Camino: A Breaking Bad Movie","overview":"In the wake of his dramatic escape from captivity, Jesse Pinkman must come to terms with his past in order to forge some kind of future.","vote_count":2147,"video":false,"media_type":"movie","poster_path":"/ePXuKdXZuJx8hHMNr2yM4jY2L7Z.jpg","backdrop_path":"/2GUcUDSGqQSyIxe7xDxnVTfWQgq.jpg","popularity":40.571,"title":"El Camino: A Breaking Bad Movie","original_language":"en","genre_ids":[28,80,18,53],"vote_average":6.9,"adult":false,"release_date":"2019-10-11","credit_id":"5be34d7a0e0a2614ba01c2cb"},{"id":239459,"character":"Himself","original_title":"No Half Measures: Creating the Final Season of Breaking Bad","overview":"A documentary about the making of season five of the acclaimed AMC series Breaking Bad.","vote_count":77,"video":false,"media_type":"movie","poster_path":null,"backdrop_path":null,"popularity":3.755,"title":"No Half Measures: Creating the Final Season of Breaking Bad","original_language":"zh","genre_ids":[99],"vote_average":8.6,"adult":false,"release_date":"2013-11-26","credit_id":"52fe4e93c3a36847f8299e17"},{"id":238466,"character":"Himself","original_title":"David Blaine: Real or Magic","overview":"David Blaine\'s signature brand of street magic mystifies the most recognisable celebrities in the world, such as Jamie Foxx, Bryan Cranston, Aaron Paul, Ricky Gervais, Katy Perry, Woody Allen, and Robert DeNiro, to name a few. He goes to the homes of Kanye West and Harrison Ford, Will Smith and Olivia Wilde. He pays a visit to Stephen Hawking at his office in Cambridge University. Blaine also travels the world, astonishing people from all walks of life with never-before seen, inconceivable magic.","vote_count":59,"video":false,"media_type":"movie","poster_path":"/j5eamgRa6yJEmkOoxYu80dWkji3.jpg","backdrop_path":"/rc4uhKL1IhQE88cqJlfuoJPUBIC.jpg","popularity":8.532,"title":"David Blaine: Real or Magic","original_language":"en","genre_ids":[99],"vote_average":6.7,"adult":false,"release_date":"2013-11-19","credit_id":"52fe4e7dc3a36847f82938c7"},{"id":1396,"character":"Jesse Pinkman","episode_count":62,"overview":"When Walter White, a New Mexico chemistry teacher, is diagnosed with Stage III cancer and given a prognosis of only two years left to live. He becomes filled with a sense of fearlessness and an unrelenting desire to secure his family\'s financial future at any cost as he enters the dangerous world of drugs and crime.","origin_country":["US"],"original_name":"Breaking Bad","genre_ids":[18],"name":"Breaking Bad","media_type":"tv","backdrop_path":"/hbgPoI0GBrXJfGjYNV2fMQU0xou.jpg","popularity":65.528,"first_air_date":"2008-01-20","original_language":"en","vote_count":3973,"vote_average":8.5,"poster_path":"/1yeVJox3rjo2jBKrrihIMj7uoS9.jpg","credit_id":"52542282760ee31328001845"}]';
+      sampleData = '[{"id":559969,"title":"El Camino: A Breaking Bad Movie","media_type":"movie","release_date":"2019-10-11","actorName1":"Bryan Cranston","actorName2":"Aaron Paul","characterName1":"Walter White","characterName2":"Jesse Pinkman"},{"id":239459,"title":"No Half Measures: Creating the Final Season of Breaking Bad","media_type":"movie","release_date":"2013-11-26","actorName1":"Bryan Cranston","actorName2":"Aaron Paul","characterName1":"Himself","characterName2":"Himself"},{"id":238466,"title":"David Blaine: Real or Magic","media_type":"movie","release_date":"2013-11-19","actorName1":"Bryan Cranston","actorName2":"Aaron Paul","characterName1":"Himself","characterName2":"Himself"},{"id":1396,"name":"Breaking Bad","media_type":"tv","first_air_date":"2008-01-20","actorName1":"Bryan Cranston","actorName2":"Aaron Paul","characterName1":"Walter White","characterName2":"Jesse Pinkman"}]';
     } else if (searchType === searchTypes.byShows) {
       sampleData = '[{"id":31,"name":"Tom Hanks","characterName1":"Joe Fox","characterName2":"Sam Baldwin","showName1":"You\'ve Got Mail","showName2":"Sleepless in Seattle"},{"id":5344,"name":"Meg Ryan","characterName1":"Kathleen Kelly","characterName2":"Annie Reed","showName1":"You\'ve Got Mail","showName2":"Sleepless in Seattle"},{"id":1010,"name":"Michael Badalucco","characterName1":"Charlie","characterName2":"New York Taxi Dispatcher (as Mike Badalucco)","showName1":"You\'ve Got Mail","showName2":"Sleepless in Seattle"}]';
     }
@@ -159,19 +159,13 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
     console.log(showCredits1);
     console.log(showCredits2);
 
-    console.log("Now find any objects that share an ID and return just those");
     // could maybe do this more efficiently than stepping through the second array start to finish for each element in the first array
     showCredits1.forEach((val) => {
 
       let combinedMatch = {};
-
       const match = showCredits2.find((res) => {
         if (isMatch(res, val, 'id')) {
           // found the same actor in both lists of shows
-
-          console.log(val);
-          console.log(res);
-
           combinedMatch['id'] = val.id;
           combinedMatch['name'] = val.name;
           combinedMatch['characterName1'] = val.character;
@@ -184,12 +178,8 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
       });
 
       if (match) {
-
         console.log(combinedMatch);
         matches.push(combinedMatch);
-
-        // old way
-        //matches.push(match);
       }
     });
 
@@ -203,8 +193,8 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
     let matches : any[] = [];
 
     /* Get the actor credits and find overlaps */
-    let actorCredits1 = [];
-    let actorCredits2 = [];
+    let actorCredits1: any[] = [];
+    let actorCredits2: any[] = [];
 
     if (value1) {
       actorCredits1 = await getActorCredits(value1.id);
@@ -221,15 +211,44 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
     // loop through this actor's movie and TV credits, and for each one, loop through the other actor's credits
     // make record of any matches found 
     actorCredits1.forEach((val) => {
+
+      let combinedMatch = {};
+
       if (includeTV && isValidTVCredit(yearCutoff, val)) {
-        const match = actorCredits2.find((res) => isMatch(res, val, 'name') && isValidTVCredit(yearCutoff, res));
+        const match = actorCredits2.find((res) => {
+          if (isMatch(res, val, 'name') && isValidTVCredit(yearCutoff, res)) {
+            combinedMatch['id'] = val.id; // tv show's id
+            combinedMatch['name'] = val.name; // tv shows use 'name'
+            combinedMatch['media_type'] = val.media_type;
+            combinedMatch['first_air_date'] = val.first_air_date; // tv shows use 'first air date'
+            combinedMatch['actorName1'] = value1?.name; // get actor 1's name from state
+            combinedMatch['actorName2'] = value2?.name; // get actor 2's name from state
+            combinedMatch['characterName1'] = val.character;
+            combinedMatch['characterName2'] = res.character;
+
+            return true;
+          }
+        });
         if (match) {
-          matches.push(match);
+          matches.push(combinedMatch);
         }
       } else if (includeMovies && isValidMovieCredit(yearCutoff, val)) {
-        const match = actorCredits2.find((res) => isMatch(res, val, 'title'));
+        const match = actorCredits2.find((res) => {
+          if (isMatch(res, val, 'title')) {
+            combinedMatch['id'] = val.id; // movie's id
+            combinedMatch['title'] = val.title; // movies use 'title'
+            combinedMatch['media_type'] = val.media_type;
+            combinedMatch['release_date'] = val.release_date; // movies use 'release date'
+            combinedMatch['actorName1'] = value1?.name; // get actor 1's name from state
+            combinedMatch['actorName2'] = value2?.name; // get actor 2's name from state
+            combinedMatch['characterName1'] = val.character;
+            combinedMatch['characterName2'] = res.character;
+
+            return true;
+          }
+        });
         if (match) {
-          matches.push(match);
+          matches.push(combinedMatch);
         }
       }
     });
