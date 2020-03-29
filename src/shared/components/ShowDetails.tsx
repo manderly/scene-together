@@ -5,7 +5,8 @@ import { Card, CardContent, CardHeader, makeStyles, Typography } from '@material
 import ShowTypeIcon from 'shared/components/ShowTypeIcon';
 import { blue, green } from '@material-ui/core/colors';
 
-import { getActorProfileLink, getShowLink } from 'shared/components/Utils';
+import ActorProfileLink from './ActorProfileLink';
+import ShowDetailsLink from './ShowDetailsLink';
 
 // define the params here 
 interface IShowDetails {
@@ -41,6 +42,9 @@ const useStyles = makeStyles({
 const ShowDetails: React.FC<IShowDetails> = ({ id, showName, showDate, showType, actorName1, actorName2, actorID1, actorID2, characterName1, characterName2 }) => {
   const classes = useStyles();
 
+  const cardTitle = <ShowDetailsLink id={id} name={showName} showType={showType}/>;
+  const cardSubheader = <span>{showType === "movie" ? "Release date:" : "First aired:"} <Moment format="MMMM D, YYYY">{showDate}</Moment></span>;
+
   return (
     <Card className={classes.root}>
       <CardContent className="resultsCard">
@@ -50,12 +54,12 @@ const ShowDetails: React.FC<IShowDetails> = ({ id, showName, showDate, showType,
               <ShowTypeIcon showType={showType}/>
             </Avatar>
           }
-          title={getShowLink(id, showName, showType)}
-          subheader={<span>{showType === "movie" ? "Release date:" : "First aired:"} <Moment format="MMMM D, YYYY">{showDate}</Moment></span>}
+          title={cardTitle}
+          subheader={cardSubheader}
         />
         <br/>
-        <Typography><b>{getActorProfileLink(actorID1, actorName1)}</b> as {characterName1}</Typography>
-        <Typography><b>{getActorProfileLink(actorID2, actorName2)}</b> as {characterName2}</Typography>
+        <Typography><b>{<ActorProfileLink id={actorID1} name={actorName1}/>}</b> as {characterName1}</Typography>
+        <Typography><b>{<ActorProfileLink id={actorID2} name={actorName2}/>}</b> as {characterName2}</Typography>
       </CardContent>
     </Card>
   )

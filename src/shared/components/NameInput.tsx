@@ -81,7 +81,7 @@ const NameInput: React.FC<INameInput> = ({ id, error, label, exampleName, setVal
         }
       })();
     }
-  }, [debouncedUserInput]);
+  }, [debouncedUserInput, searchType]);
 
 
   React.useEffect(() => {

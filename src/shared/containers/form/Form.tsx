@@ -7,7 +7,7 @@ import SubmitFormButton from 'shared/components/SubmitFormButton';
 import ResultsContainer from 'shared/components/ResultsContainer';
 import { chooseExampleActorPair, chooseExampleShowPair } from 'services/popularPairs';
 
-import { buildInCommonText, sortShowsByReleaseDate } from 'services/utils';
+import { sortShowsByReleaseDate } from 'services/utils';
 import { searchTypes } from 'shared/enums/enums';
 import { getActorCredits } from 'services/actor';
 import { getTVShowCredits, getMovieCredits, getTVShowSeasonCount, getTVShowCreditsBySeason } from 'services/show';
@@ -179,6 +179,7 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
           combinedMatch['showType2'] = value2?.media_type;
           return true;
         }
+        return false;
       });
 
       if (match) {
@@ -231,9 +232,9 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
             combinedMatch['actorID2'] = value2?.id; 
             combinedMatch['characterName1'] = val.character;
             combinedMatch['characterName2'] = res.character;
-
             return true;
-          }
+          } 
+          return false;
         });
         if (match) {
           matches.push(combinedMatch);
@@ -251,9 +252,9 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
             combinedMatch['actorID2'] = value2?.id; 
             combinedMatch['characterName1'] = val.character;
             combinedMatch['characterName2'] = res.character;
-
             return true;
           }
+          return false;
         });
         if (match) {
           matches.push(combinedMatch);
