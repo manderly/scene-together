@@ -2,8 +2,10 @@ import React from 'react';
 import Moment from 'react-moment';
 import Avatar from '@material-ui/core/Avatar';
 import { Card, CardContent, CardHeader, makeStyles, Typography } from '@material-ui/core';
-import ShowTypeIcon from './ShowTypeIcon';
+import ShowTypeIcon from 'shared/components/ShowTypeIcon';
 import { blue, green } from '@material-ui/core/colors';
+
+import { getActorProfileLink, getShowLink } from 'shared/components/Utils';
 
 // define the params here 
 interface IShowDetails {
@@ -21,8 +23,8 @@ interface IShowDetails {
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 585,
-    maxWidth: 585,
+    minWidth: 520,
+    maxWidth: 520,
   },
   pullLeft: {
     float: "left",
@@ -34,14 +36,6 @@ const useStyles = makeStyles({
     backgroundColor: green[200],
   }
 });
-
-function getActorProfileLink(id: number, name: string) {
-  return <a href={"https://www.themoviedb.org/person/"+id}>{name}</a>
-}
-
-function getShowLink(id: number, name: string, showType: string) {
-return <a href={"https://www.themoviedb.org/"+showType+"/"+id}>{name}</a>
-}
 
 /* Needs a root node, so <>  </> serves that purpose here */
 const ShowDetails: React.FC<IShowDetails> = ({ id, showName, showDate, showType, actorName1, actorName2, actorID1, actorID2, characterName1, characterName2 }) => {

@@ -18,7 +18,7 @@ const darkTheme = createMuiTheme({
   palette: {
     type: 'dark',
     primary: {
-      main: '#b2ab6d',
+      main: '#ffbe3d',
       dark: '#8E793E',
       contrastText: '#231F20',
     },
@@ -31,12 +31,13 @@ const darkTheme = createMuiTheme({
     },
     text: {
       primary: '#EAEAEA',
-      secondary: '#b2ab6d',
+      secondary: '#ffbe3d',
     }
   },
 });
 
 function App() {
+  
   return (
     <Router>
       <div className="App">
@@ -44,6 +45,11 @@ function App() {
           <Header />
 
           <Switch>
+          
+            <Route exact path="/" >
+              <Actors />
+            </Route>
+
             <Route path="/actors">
               <Actors />
             </Route>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
-import ResultsList from 'features/actors/components/ResultsList';
+import ResultsList from 'shared/components/ResultsList';
 import { IActorResult } from 'shared/models/actor.model';
 import { IMovieResult } from 'shared/models/movie.model';
 import { ITVShowResult } from 'shared/models/tvshow.model';
@@ -16,7 +16,7 @@ interface IResultsContainer {
 
 const ResultsContainer: React.FC<IResultsContainer> = ({ inCommonText, results, searchType }) => {
   return (
-    <Grid container spacing={4} alignItems="center">
+    <Grid container spacing={4} alignItems="center" justify="center">
 				{/* Title varies with filters */}
 				<Grid item xs={2}></Grid>
 				<Grid item xs={8}>

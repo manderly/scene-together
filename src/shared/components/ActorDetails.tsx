@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, makeStyles, Typography } from '@material
 import PersonIcon from '@material-ui/icons/Person';
 import { pink } from '@material-ui/core/colors';
 
+import { getActorProfileLink, getShowLink } from 'shared/components/Utils';
+
 // define the params here 
 interface IActorDetails {
   id: number;
@@ -21,8 +23,8 @@ interface IActorDetails {
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 585,
-    maxWidth: 585,
+    minWidth: 520,
+    maxWidth: 520,
   },
   pullLeft: {
     float: "left",
@@ -31,14 +33,6 @@ const useStyles = makeStyles({
     backgroundColor: pink[300],
   }
 });
-
-function getActorProfileLink(id: number, name: string) {
-    return <a href={"https://www.themoviedb.org/person/"+id}>{name}</a>
-}
-
-function getShowLink(id: number, name: string, showType: string) {
-  return <a href={"https://www.themoviedb.org/"+showType+"/"+id}>{name}</a>
-}
 
 /* Needs a root node, so <>  </> serves that purpose here */
 const ActorDetails: React.FC<IActorDetails> = ({ id, name, showName1, showName2, showID1, showID2, showType1, showType2, characterName1, characterName2 }) => {

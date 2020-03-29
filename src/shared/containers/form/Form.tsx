@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { Box, Grid, Button, Link } from '@material-ui/core';
-import NameInput from 'features/actors/components/NameInput';
+import { Box, Grid, Link } from '@material-ui/core';
+import NameInput from 'shared/components/NameInput';
 import SearchFilters from 'shared/components/SearchFilters';
 import SubmitFormButton from 'shared/components/SubmitFormButton';
 import ResultsContainer from 'shared/components/ResultsContainer';
@@ -74,6 +74,7 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
   
   function loadTestData() {
     let sampleData = '';
+    console.log(searchType);
     if (searchType === searchTypes.byActors) {
       sampleData = '[{"id":559969,"title":"El Camino: A Breaking Bad Movie","media_type":"movie","release_date":"2019-10-11","actorName1":"Bryan Cranston","actorName2":"Aaron Paul","characterName1":"Walter White","characterName2":"Jesse Pinkman"},{"id":239459,"title":"No Half Measures: Creating the Final Season of Breaking Bad","media_type":"movie","release_date":"2013-11-26","actorName1":"Bryan Cranston","actorName2":"Aaron Paul","characterName1":"Himself","characterName2":"Himself"},{"id":238466,"title":"David Blaine: Real or Magic","media_type":"movie","release_date":"2013-11-19","actorName1":"Bryan Cranston","actorName2":"Aaron Paul","characterName1":"Himself","characterName2":"Himself"},{"id":1396,"name":"Breaking Bad","media_type":"tv","first_air_date":"2008-01-20","actorName1":"Bryan Cranston","actorName2":"Aaron Paul","characterName1":"Walter White","characterName2":"Jesse Pinkman"}]';
     } else if (searchType === searchTypes.byShows) {
@@ -355,7 +356,7 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
               
               <Grid item>
                 <Box textAlign="center">
-                  <Link color="primary" variant="body2" onClick={loadTestData}>Load Test Data</Link>
+                  <Link variant="body2" onClick={loadTestData}>Load Test Data</Link>
                 </Box></Grid>
       
             </Box>

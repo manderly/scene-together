@@ -4,16 +4,15 @@ import Instructions from 'shared/components/Instructions';
 import { searchTypes } from 'shared/enums/enums';
 
 const Shows: React.FC = () => {  // functional component 
-
   return (
-		<div>
+    <div>
       <Instructions
-        title="Search by show names"
+        title="Search by Movie/TV show"
         subtitle="Enter the names of two shows (movies or TV) to find out which actors have appeared in both."
       />
-
+      <br/>
       <Form searchType={searchTypes.byShows}/>
-		</div>
+    </div>
 	);
 }
 

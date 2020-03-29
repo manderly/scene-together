@@ -24,11 +24,11 @@ const Header: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="static" className={"appHeaderBar"}>
       <Toolbar>
 
         <Typography variant="h5" className={classes.title}>
-          <b><i>Actors in Common</i></b>
+          <b>Scene Together In...</b>
         </Typography>
 
         <ul className="app-header-link-list">

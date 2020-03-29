@@ -26,7 +26,7 @@ const ResultsList: React.FC<IResultsList> = ({ results, searchType }) => {
           // the "&" here sorta combines them into one model, conceptually
           // and it's up to us to pick the right params to display for primary and secondary
           return (
-            <ListItem key={index}>
+            <ListItem key={index} className="detailsCard">
               {searchType === searchTypes.byActors && <ShowDetails
                 id={result?.id}
                 showName={result?.title ?? result?.name}

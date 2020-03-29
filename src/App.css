@@ -58,3 +58,7 @@ body {
 .resultsCardHeader a:hover {
   text-decoration: underline;
 }
+
+.detailsCard {
+  justify-content: center !important;
+}
