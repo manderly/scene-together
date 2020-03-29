@@ -130,7 +130,7 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
 
     }, []); // empty [] means "start with empty array"
 
-    console.log(consolidatedTVCredits);
+    //console.log(consolidatedTVCredits);
     return consolidatedTVCredits;
   }
 
@@ -157,8 +157,8 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
       }
     }
 
-    console.log(showCredits1);
-    console.log(showCredits2);
+    //console.log(showCredits1);
+    //console.log(showCredits2);
 
     // could maybe do this more efficiently than stepping through the second array start to finish for each element in the first array
     showCredits1.forEach((val) => {
@@ -358,7 +358,8 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
               <Grid item>
                 <Box textAlign="center">
                   <Link variant="body2" onClick={loadTestData}>Load Test Data</Link>
-                </Box></Grid>
+                </Box>
+            </Grid>
       
             </Box>
 

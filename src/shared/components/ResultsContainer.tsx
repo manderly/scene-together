@@ -27,7 +27,7 @@ const ResultsContainer: React.FC<IResultsContainer> = ({ inCommonText, results, 
 				<Grid item xs={2}></Grid>
 
 				{/* only show this section once movieResults has data */}
-				{results.length &&
+				{results.length > 0 &&
 						<>
 						<Grid item xs={2}></Grid>
 
