@@ -14,7 +14,6 @@ const popularActorPairs = [
 	{name1: "Ben Affleck", name2: "Matt Damon"},
 	{name1: "Ben Stiller", name2: "Owen Wilson"},
 	{name1: "James Franco", name2: "Seth Rogen"},
-	{name1: "Joan Cusack", name2: "John Cusack"},
 	{name1: "Adam Sandler", name2: "Rob Schneider"},
 ];
 
