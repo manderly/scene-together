@@ -2,7 +2,8 @@
 Created March 2020
 React learning project
 
-Screenshot here
+![alt text](screenshots/scene-together2020.png "Screenshot of 'Scene Together' app on desktop")
+
 
 ### To run locally (for development)
 1. Git clone this repo 
