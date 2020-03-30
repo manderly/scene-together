@@ -1,0 +1,10 @@
+.appFooterBar {
+  align-items: center;
+  color: gray !important;
+  padding:5px;
+  background-color:black !important;
+}
+
+.appFooterBar a {
+  color: #f06543;
+}
