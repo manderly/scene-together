@@ -9,7 +9,7 @@ interface IInstructions {
 
 const Instructions: React.FC<IInstructions> = ({ title, subtitle }) => {
   return (
-    <Box textAlign="center" pt={4}>
+    <Box textAlign="center" p={2} pt={4}>
       <Typography variant="h4" color="textPrimary">{title}</Typography>
       <Typography color="primary">{subtitle}</Typography>
     </Box>

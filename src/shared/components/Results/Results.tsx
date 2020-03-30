@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, Box } from '@material-ui/core';
 import ResultsList from 'shared/components/Results/ResultsList/ResultsList';
 import { IActorResult } from 'shared/models/actor.model';
 import { IMovieResult } from 'shared/models/movie.model';
@@ -20,12 +20,14 @@ const Results: React.FC<IResults> = ({ inCommonTextTitle, inCommonText, results,
     <Grid container spacing={4} alignItems="center" justify="center">
 				{/* Title varies with filters */}
 				<Grid item sm={12}>
-					<Typography variant="h4" color="textPrimary" align="center">
-						{inCommonTextTitle}
-					</Typography>
-					<Typography variant="body1" color="textSecondary" align="center">
-						{inCommonText}
-					</Typography>
+					<Box p={2}>
+						<Typography variant="h4" color="textPrimary" align="center">
+							{inCommonTextTitle}
+						</Typography>
+						<Typography variant="body1" color="textSecondary" align="center">
+							{inCommonText}
+						</Typography>
+					</Box>
 				</Grid>
 
 				{/* only show this section once movieResults has data */}
