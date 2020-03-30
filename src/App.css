@@ -3,6 +3,10 @@ body {
   height: 100vh;
 }
 
+.App {
+  overflow: auto;
+}
+
 .width100 {
   width: 100%;
 }
