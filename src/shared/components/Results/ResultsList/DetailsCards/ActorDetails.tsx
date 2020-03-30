@@ -5,8 +5,10 @@ import { Card, CardContent, CardHeader, makeStyles, Typography } from '@material
 import PersonIcon from '@material-ui/icons/Person';
 import { pink } from '@material-ui/core/colors';
 
-import ActorProfileLink from 'shared/components/ActorProfileLink';
-import ShowDetailsLink from 'shared/components/ShowDetailsLink';
+import ActorProfileLink from 'shared/components/Results/ResultsList/DetailsCards/ActorProfileLink';
+import ShowDetailsLink from 'shared/components/Results/ResultsList/DetailsCards/ShowDetailsLink';
+
+import './DetailsCard.css';
 
 // define the params here 
 interface IActorDetails {
@@ -43,8 +45,8 @@ const ActorDetails: React.FC<IActorDetails> = ({ id, name, showName1, showName2,
 
   return (
     <Card className={classes.root}>
-      <CardContent className="resultsCard">
-        <CardHeader className="resultsCardHeader"
+      <CardContent className="detailsCard">
+        <CardHeader className="detailsCardHeader"
           avatar={
             <Avatar className={classes.avatar}>
               <PersonIcon />

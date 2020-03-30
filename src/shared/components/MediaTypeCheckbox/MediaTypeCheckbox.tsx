@@ -1,6 +1,8 @@
 import React from 'react';
 import { Checkbox, FormControlLabel, Grid } from '@material-ui/core';
 
+import './MediaTypeCheckbox.css';
+
 // https://dev.to/pretaporter/typescript-simple-react-components-occ
 
 // define the params here 

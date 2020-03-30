@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import { Box, Grid, Link } from '@material-ui/core';
 import NameInput from 'shared/components/NameInput';
-import SearchFilters from 'shared/components/SearchFilters';
+import SearchFilters from 'shared/components/SearchFilters/SearchFilters';
 import SubmitFormButton from 'shared/components/SubmitFormButton';
-import ResultsContainer from 'shared/components/ResultsContainer';
+import Results from 'shared/components/Results/Results';
 import { chooseExampleActorPair, chooseExampleShowPair } from 'services/popularPairs';
 
 import { sortShowsByReleaseDate } from 'services/utils';
@@ -407,7 +407,7 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
           </Box>
       </form>
 
-      <ResultsContainer inCommonTextTitle={inCommonTextTitle} inCommonText={inCommonText} results={results} searchType={searchType}/>
+      <Results inCommonTextTitle={inCommonTextTitle} inCommonText={inCommonText} results={results} searchType={searchType}/>
       
     </div>
   );

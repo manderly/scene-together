@@ -7,6 +7,7 @@ import './App.css';
 import Actors from 'features/actors/Actors';
 import Shows from 'features/shows/Shows';
 import Header from 'shared/containers/header/Header';
+import Footer from 'shared/containers/footer/Footer';
 
 import {
   BrowserRouter as Router,
@@ -42,23 +43,25 @@ function App() {
     <Router>
       <div className="App">
         <ThemeProvider theme={darkTheme}>
-          <Header />
+          <div className={"flex-wrapper"}>
+            <Header />
 
-          <Switch>
-          
-            <Route exact path="/" >
-              <Actors />
-            </Route>
+            <Switch>
+              <Route exact path="/" >
+                <Actors />
+              </Route>
 
-            <Route path="/actors">
-              <Actors />
-            </Route>
+              <Route path="/actors">
+                <Actors />
+              </Route>
 
-            <Route path="/shows">
-              <Shows />
-            </Route>
+              <Route path="/shows">
+                <Shows />
+              </Route>
+            </Switch>
 
-          </Switch>
+            <Footer />
+          </div>
         </ThemeProvider>
       </div>
     </Router>

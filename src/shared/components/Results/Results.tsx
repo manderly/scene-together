@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
-import ResultsList from 'shared/components/ResultsList';
+import ResultsList from 'shared/components/Results/ResultsList/ResultsList';
 import { IActorResult } from 'shared/models/actor.model';
 import { IMovieResult } from 'shared/models/movie.model';
 import { ITVShowResult } from 'shared/models/tvshow.model';
@@ -8,14 +8,14 @@ import { ITVShowResult } from 'shared/models/tvshow.model';
 import { searchTypes } from 'shared/enums/enums';
 
 // define the params here 
-interface IResultsContainer {
+interface IResults {
 	inCommonTextTitle: string;
   inCommonText: string;
 	results: Array<IMovieResult & ITVShowResult & IActorResult>;
 	searchType: searchTypes;
 }
 
-const ResultsContainer: React.FC<IResultsContainer> = ({ inCommonTextTitle, inCommonText, results, searchType }) => {
+const Results: React.FC<IResults> = ({ inCommonTextTitle, inCommonText, results, searchType }) => {
   return (
     <Grid container spacing={4} alignItems="center" justify="center">
 				{/* Title varies with filters */}
@@ -46,4 +46,4 @@ const ResultsContainer: React.FC<IResultsContainer> = ({ inCommonTextTitle, inCo
   );
 }
 
-export default ResultsContainer;
+export default Results;

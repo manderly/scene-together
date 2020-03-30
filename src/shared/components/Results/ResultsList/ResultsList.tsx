@@ -7,8 +7,10 @@ import { ITVShowResult } from 'shared/models/tvshow.model';
 
 import { searchTypes } from 'shared/enums/enums';
 
-import ShowDetails from './ShowDetails';
-import ActorDetails from './ActorDetails';
+import ShowDetails from './DetailsCards/ShowDetails';
+import ActorDetails from './DetailsCards/ActorDetails';
+
+import './ResultsList.css';
 
 // define the params here 
 interface IResultsList {

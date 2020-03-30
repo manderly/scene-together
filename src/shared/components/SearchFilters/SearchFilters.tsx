@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import MediaTypeCheckbox from 'shared/components/MediaTypeCheckbox';
-import YearFilters from 'shared/components/YearFilters';
+import MediaTypeCheckbox from 'shared/components/MediaTypeCheckbox/MediaTypeCheckbox';
+import YearFilters from 'shared/components/SearchFilters/YearFilters';
 
 // define the params here 
 interface ISearchFilters {

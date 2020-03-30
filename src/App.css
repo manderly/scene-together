@@ -3,71 +3,13 @@ body {
   height: 100vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #EAEAEA;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: #8E793E;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-.mediaTypeCheckboxLabel {
-  color: #fff;
-}
-
-.MuiCardHeader-root {
-  padding: 0px !important;
-}
-
-.MuiCardHeader-title {
-  font-weight: bold !important;
-  font-size: 16px !important;
-}
-
-.resultsCard a {
-  color: white;
-  text-decoration: none;
-}
-
-.resultsCard a:hover {
-  text-decoration: underline;
-}
-
-.resultsCard p {
-  font-size: 14px !important;
-}
-
-.resultsCardHeader a {
-  color: primary;
-  text-decoration: none;
-}
-
-.resultsCardHeader a:hover {
-  text-decoration: underline;
-}
-
-.detailsCard {
-  justify-content: center !important;
-}
-
 .width100 {
   width: 100%;
+}
+
+.flex-wrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
 }

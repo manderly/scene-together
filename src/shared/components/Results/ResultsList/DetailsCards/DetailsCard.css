@@ -1,0 +1,30 @@
+.MuiCardHeader-root {
+  padding: 0px !important;
+}
+
+.MuiCardHeader-title {
+  font-weight: bold !important;
+  font-size: 16px !important;
+}
+
+.detailsCard a {
+  color: white;
+  text-decoration: none;
+}
+
+.detailsCard a:hover {
+  text-decoration: underline;
+}
+
+.detailsCard p {
+  font-size: 14px !important;
+}
+
+.detailsCardHeader a {
+  color: primary;
+  text-decoration: none;
+}
+
+.detailsCardHeader a:hover {
+  text-decoration: underline;
+}
