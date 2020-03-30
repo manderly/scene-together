@@ -141,12 +141,16 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
     // and make an API call for each season (ouch), collecting the cast from each response
     let allTVCredits: any[] = [];
     
-    if (seasonCount > 0) {
-      for (let i = 0; i < seasonCount; i++) {
-        allTVCredits.push(await getTVShowCreditsBySeason(showID, i));
+    // Multi-season show
+    if (seasonCount > 1) {
+      for (let i = 1; i < seasonCount; i++) {
+        let credits = await getTVShowCreditsBySeason(showID, i);
+        if (credits) {
+          allTVCredits.push(credits);
+        }
       }
     } else {
-      console.log("Getting show credits for single-season show");
+      //console.log("Getting show credits for single-season show");
       allTVCredits.push(await getTVShowCredits(showID));
     }
 

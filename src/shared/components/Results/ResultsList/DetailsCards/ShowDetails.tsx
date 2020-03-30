@@ -61,7 +61,7 @@ const ShowDetails: React.FC<IShowDetails> = ({ id, showName, showDate, showType,
         />
         <br/>
         <Typography><b>{<ActorProfileLink id={actorID1} name={actorName1}/>}</b>{characterName1 !== '' ? ` as ${characterName1}` : ''}</Typography>
-        <Typography><b>{<ActorProfileLink id={actorID2} name={actorName2}/>}</b>{characterName1 !== '' ? ` as ${characterName1}` : ''}</Typography>
+        <Typography><b>{<ActorProfileLink id={actorID2} name={actorName2}/>}</b>{characterName2 !== '' ? ` as ${characterName2}` : ''}</Typography>
       </CardContent>
     </Card>
   )
