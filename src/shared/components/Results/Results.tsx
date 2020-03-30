@@ -19,8 +19,7 @@ const Results: React.FC<IResults> = ({ inCommonTextTitle, inCommonText, results,
   return (
     <Grid container spacing={4} alignItems="center" justify="center">
 				{/* Title varies with filters */}
-				<Grid item xs={2}></Grid>
-				<Grid item xs={8}>
+				<Grid item sm={12}>
 					<Typography variant="h4" color="textPrimary" align="center">
 						{inCommonTextTitle}
 					</Typography>
@@ -28,19 +27,12 @@ const Results: React.FC<IResults> = ({ inCommonTextTitle, inCommonText, results,
 						{inCommonText}
 					</Typography>
 				</Grid>
-				<Grid item xs={2}></Grid>
 
 				{/* only show this section once movieResults has data */}
 				{results.length > 0 &&
-						<>
-						<Grid item xs={2}></Grid>
-
-						<Grid item xs={8}>
+						<Grid item xs={12} sm={10} md={8} lg={6}>
 							<ResultsList results={results} searchType={searchType}/>
 						</Grid>
-
-						<Grid item xs={2}></Grid>
-						</>
 				}
 			</Grid>
   );

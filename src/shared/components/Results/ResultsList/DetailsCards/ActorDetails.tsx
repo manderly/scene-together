@@ -25,10 +25,6 @@ interface IActorDetails {
 }
 
 const useStyles = makeStyles({
-  root: {
-    minWidth: 520,
-    maxWidth: 520,
-  },
   pullLeft: {
     float: "left",
   },
@@ -45,8 +41,8 @@ const ActorDetails: React.FC<IActorDetails> = ({ id, name, showName1, showName2,
 
 
   return (
-    <Card className={classes.root}>
-      <CardContent className="detailsCard">
+    <Card className="detailsCard">
+      <CardContent>
         <CardHeader className="detailsCardHeader"
           avatar={
             <Avatar className={classes.avatar}>

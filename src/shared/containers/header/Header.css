@@ -5,8 +5,13 @@
   color: #fff;
 }
 
+.app-header-link-list {
+  line-height: 30px;
+}
+
 .app-header-link-list li {
-    display: inline;
-    padding-left:20px;
+    display: inline-flex;
+    padding-left: 20px;
+    line-height: 20px;
   }
 

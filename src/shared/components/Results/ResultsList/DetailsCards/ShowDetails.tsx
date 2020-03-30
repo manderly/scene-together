@@ -25,10 +25,6 @@ interface IShowDetails {
 }
 
 const useStyles = makeStyles({
-  root: {
-    minWidth: 520,
-    maxWidth: 520,
-  },
   pullLeft: {
     float: "left",
   },
@@ -48,8 +44,8 @@ const ShowDetails: React.FC<IShowDetails> = ({ id, showName, showDate, showType,
   const cardSubheader = <span>{showType === "movie" ? "Release date:" : "First aired:"} <Moment format="MMMM D, YYYY">{showDate}</Moment></span>;
 
   return (
-    <Card className={classes.root}>
-      <CardContent className="detailsCard">
+    <Card className="detailsCard">
+      <CardContent>
         <CardHeader className="detailsCardHeader"
           avatar={
             <Avatar className={showType === "movie" ? classes.movieAvatar : classes.tvAvatar}>

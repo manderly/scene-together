@@ -348,7 +348,7 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
         {/* Instructions */}
         <Box>
         <Grid container spacing={2} direction="column" alignItems="center" justify="center">
-          <Grid item xs={12} sm={8} className={"width100"}>
+          <Grid item sm={12} md={10} lg={8} className={"width100"}>
 
             {/* Actor search fields */}
             <Box textAlign="center" p={2}>
