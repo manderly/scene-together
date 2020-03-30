@@ -82,19 +82,6 @@ const NameInput: React.FC<INameInput> = ({ id, error, label, exampleName, setVal
     }
   }, [debouncedUserInput, searchType]);
 
-
-  React.useEffect(() => {
-    let active = true;
-
-    if (!loading) {
-      return undefined;
-    }
-
-    return () => {
-      active = false;
-    };
-  }, [loading]);
-
   React.useEffect(() => {
     if (!open) {
       setOptions([]);
