@@ -1,6 +1,9 @@
 ### Scene Togther
-Created March 2020
-React learning project
+This is a web app I made in March 2020 to get acquainted React. It is fully functional and can be used on desktop or mobile. Go to [scene-together.herokuapp.com](http://scene-together/herokuapp.com) to try it out! (Give it a few seconds to load, it's on a free dyno :P ) 
+
+* Input the names of two actors see what shows they've worked on together.
+* Input the names of two shows and see what actors they have in common.
+* Use the "Load test data" button if you want to skip the form inputs and just see it work 
 
 ![alt text](screenshots/scene-together2020.png "Screenshot of 'Scene Together' app on desktop")
 
@@ -12,7 +15,7 @@ React learning project
 
 ```REACT_APP_API_KEY_TMDB="abcdefg"```
 
- where abcdefg is your TMDB API key (Get an account and API key [here](https://developers.themoviedb.org/3/getting-started/introduction).)
+...where ```"abcdefg"``` is your TMDB API key (Get an account and API key [here](https://developers.themoviedb.org/3/getting-started/introduction).)
 
 4. In Terminal, navigate to project directory and enter: ```npm install```
 5. In terminal: ```npm start```
