@@ -1,9 +1,11 @@
 ### Scene Togther
-This is a web app I made in March 2020 to get acquainted React. It is fully functional and can be used on desktop or mobile. Go to [scene-together.herokuapp.com](http://scene-together/herokuapp.com) to try it out! (Give it a few seconds to load, it's on a free dyno :P ) 
+This is a web app I made in March 2020 to get acquainted with React. It is fully functional and can be used on desktop or mobile. Go to [scene-together.herokuapp.com](http://scene-together/herokuapp.com) to try it out! (Give it a few seconds to load, it's on a free dyno :P ) 
 
 * Input the names of two actors see what shows they've worked on together.
 * Input the names of two shows and see what actors they have in common.
 * Use the "Load test data" button if you want to skip the form inputs and just see it work 
+
+The data is from [The Movie Database](http://themoviedb.org) and may look incomplete if you feed it some really obscure people or shows.
 
 ![alt text](screenshots/scene-together2020.png "Screenshot of 'Scene Together' app on desktop")
 
