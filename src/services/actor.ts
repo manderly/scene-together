@@ -1,4 +1,4 @@
-import { getAPI } from "./api"
+import { getAPI } from "./api";
 import { IActor } from 'shared/models/actor.model';
 
 export const findActorByName = async (name: string = ''): Promise<IActor> => {

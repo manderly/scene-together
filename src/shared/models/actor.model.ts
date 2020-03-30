@@ -8,8 +8,14 @@ export interface IActor {
 export interface IActorResult {
     id: number;
     name: string;
-    release_date: number;
-    vote_average: number;
+    characterName1: string;
+    characterName2: string;
+    showName1: string;
+    showName2: string;
+    showID1: number;
+    showID2: number;
+    showType1: string;
+    showType2: string;
 }
 
 export interface IActorCredits {

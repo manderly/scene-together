@@ -36,3 +36,38 @@ body {
 .MuiCardHeader-root {
   padding: 0px !important;
 }
+
+.MuiCardHeader-title {
+  font-weight: bold !important;
+  font-size: 16px !important;
+}
+
+.resultsCard a {
+  color: white;
+  text-decoration: none;
+}
+
+.resultsCard a:hover {
+  text-decoration: underline;
+}
+
+.resultsCard p {
+  font-size: 14px !important;
+}
+
+.resultsCardHeader a {
+  color: primary;
+  text-decoration: none;
+}
+
+.resultsCardHeader a:hover {
+  text-decoration: underline;
+}
+
+.detailsCard {
+  justify-content: center !important;
+}
+
+.width100 {
+  width: 100%;
+}

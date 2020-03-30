@@ -10,4 +10,10 @@ export interface IMovieResult {
     release_date: number;
     vote_average: number;
     media_type: string;
+    actorName1: string;
+    actorName2: string;
+    actorID1: number;
+    actorID2: number;
+    characterName1: string;
+    characterName2: string;
 }
