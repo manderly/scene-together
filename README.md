@@ -1,4 +1,4 @@
-### Scene Togther
+## Scene Together
 This is a web app I made in March 2020 to get acquainted with React. It is fully functional and can be used on desktop or mobile. Go to [scene-together.herokuapp.com](http://scene-together/herokuapp.com) to try it out! (Give it a few seconds to load, it's on a free dyno :P ) 
 
 * Input the names of two actors see what shows they've worked on together.
