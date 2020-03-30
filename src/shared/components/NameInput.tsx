@@ -77,7 +77,6 @@ const NameInput: React.FC<INameInput> = ({ id, error, label, exampleName, setVal
           processedShows = sortShowsByPopularity(processedShows);
 
           setOptions(Object.keys(processedShows).map(key => processedShows[key]) as Show[]);
-          //setOptions(Object.keys(shows).map(key => shows[key] as Show[]));
         }
       })();
     }
@@ -106,7 +105,7 @@ const NameInput: React.FC<INameInput> = ({ id, error, label, exampleName, setVal
     <>
       <Autocomplete
         id={id}
-        style={{ width: 300 }}
+        className={"width100"}
         open={open}
         onOpen={() => {
           if (userInput.length >= 3) {

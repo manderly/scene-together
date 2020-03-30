@@ -38,6 +38,8 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
   const [examplePair, setExamplePair] = useState({});
   
   const [inCommonText, setInCommonText] = useState<string>('');
+  const [inCommonTextTitle, setInCommonTextTitle] = useState<string>('');
+
   const [buttonText, setButtonText] = useState<string>('');
 
   // we can also set error messages to display to the user
@@ -82,7 +84,40 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
     }
 
 		let sampleMatches = JSON.parse(sampleData);
-		setResults(sampleMatches);
+    setResults(sampleMatches);
+
+    setInCommonTextTitle(buildInCommonTitleStr());
+    setInCommonText(buildInCommonTextStr(sampleMatches.length));
+  }
+
+  function buildInCommonTitleStr(): string {
+    if (searchType === searchTypes.byActors) {
+      return "Shows in common";
+      //setInCommonText(buildInCommonText(includeMovies, includeTV));
+    } else if (searchType === searchTypes.byShows) {
+      return "Actors in common";
+    }
+
+    return '';
+  }
+
+  function buildInCommonTextStr(count: number): string {
+    if (searchType === searchTypes.byActors) {
+      if (count > 0) {
+        return `These actors appear in at least ${count} show${count > 1 ? 's' : ''} together.`;
+      } else if (count === 0) {
+        return `These actors have never appeared in a show together.`;
+      }
+      //setInCommonText(buildInCommonText(includeMovies, includeTV));
+    } else if (searchType === searchTypes.byShows) {
+      if (count > 0) {
+        return `These shows have ${count} actor${count > 1 ? 's' : ''} in common.`;
+      } else if (count === 0) {
+        return `These shows have no actors in common.`;
+      }
+    }
+
+    return '';
   }
   
   React.useEffect(() => {
@@ -183,15 +218,17 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
       });
 
       if (match) {
-        console.log(combinedMatch);
+        //console.log(combinedMatch);
         matches.push(combinedMatch);
       }
     });
 
     //matches = sortActorsByPopularity(matches);
     
-    console.log(JSON.stringify(matches));
+    //console.log(JSON.stringify(matches));
     setResults(matches as []);
+    setInCommonTextTitle(buildInCommonTitleStr());
+    setInCommonText(buildInCommonTextStr(matches.length ?? 0));
   }
 
   const submitActorQuery = async () => {
@@ -265,6 +302,9 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
     matches = sortShowsByReleaseDate(matches);
     console.log(JSON.stringify(matches));
     setResults(matches as []);
+
+    setInCommonTextTitle(buildInCommonTitleStr());
+    setInCommonText(buildInCommonTextStr(matches.length));
   };
 
   // these are exactly the same in Actors.tsx and should be moved somewhere both Actors and Shows can access
@@ -291,13 +331,10 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
   const handleSubmit = (event: any) => {
     event.preventDefault();
 		if (formValidation()) {
-      if (searchType === searchTypes.byActors) {
-        setInCommonText("These actors appear together in:");
-        //setInCommonText(buildInCommonText(includeMovies, includeTV));
-        submitActorQuery();
-      } else if (searchType === searchTypes.byShows) {
-        setInCommonText('Actors in common');
+      if (searchType == searchTypes.byShows) {
         submitShowQuery();
+      } else if (searchType == searchTypes.byActors) {
+        submitActorQuery();
       }
     }
   }
@@ -308,7 +345,7 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
         {/* Instructions */}
         <Box>
         <Grid container spacing={2} direction="column" alignItems="center" justify="center">
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={8} className={"width100"}>
 
             {/* Actor search fields */}
             <Box textAlign="center" p={2}>
@@ -342,16 +379,18 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
             </Box>
 
             <Box p={2}>
-              {searchType === searchTypes.byActors &&
-              <SearchFilters 
-                yearCutoff={yearCutoff}
-                handleYearCutoffChange={changeYearCutoff}
-                tvChecked={includeTV}
-                handleTVCheckedChange={toggleTVCheckbox}
-                moviesChecked={includeMovies}
-                handleMoviesCheckedChange={toggleMoviesCheckbox}
-                />
-              }
+              <Grid item xs={12} md={5}>
+                {searchType === searchTypes.byActors &&
+                <SearchFilters 
+                  yearCutoff={yearCutoff}
+                  handleYearCutoffChange={changeYearCutoff}
+                  tvChecked={includeTV}
+                  handleTVCheckedChange={toggleTVCheckbox}
+                  moviesChecked={includeMovies}
+                  handleMoviesCheckedChange={toggleMoviesCheckbox}
+                  />
+                }
+              </Grid>
 
               <SubmitFormButton buttonText={buttonText} />
               
@@ -368,7 +407,7 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
           </Box>
       </form>
 
-      <ResultsContainer inCommonText={inCommonText} results={results} searchType={searchType}/>
+      <ResultsContainer inCommonTextTitle={inCommonTextTitle} inCommonText={inCommonText} results={results} searchType={searchType}/>
       
     </div>
   );

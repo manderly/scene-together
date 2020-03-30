@@ -7,7 +7,7 @@ const Shows: React.FC = () => {  // functional component
   return (
     <div>
       <Instructions
-        title="Search by Movie/TV show"
+        title="Search by Movie or TV show names"
         subtitle="Enter the names of two shows (movies or TV) to find out which actors have appeared in both."
       />
       <br/>

@@ -9,18 +9,22 @@ import { searchTypes } from 'shared/enums/enums';
 
 // define the params here 
 interface IResultsContainer {
+	inCommonTextTitle: string;
   inCommonText: string;
 	results: Array<IMovieResult & ITVShowResult & IActorResult>;
 	searchType: searchTypes;
 }
 
-const ResultsContainer: React.FC<IResultsContainer> = ({ inCommonText, results, searchType }) => {
+const ResultsContainer: React.FC<IResultsContainer> = ({ inCommonTextTitle, inCommonText, results, searchType }) => {
   return (
     <Grid container spacing={4} alignItems="center" justify="center">
 				{/* Title varies with filters */}
 				<Grid item xs={2}></Grid>
 				<Grid item xs={8}>
-					<Typography variant="h4" color="textSecondary">
+					<Typography variant="h4" color="textPrimary" align="center">
+						{inCommonTextTitle}
+					</Typography>
+					<Typography variant="body1" color="textSecondary" align="center">
 						{inCommonText}
 					</Typography>
 				</Grid>

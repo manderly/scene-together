@@ -37,7 +37,7 @@ const YearFilters: React.FC<ISearchFilters> = ({ yearCutoff, handleChange }) => 
       Only include shows from the past...
     </InputLabel>
 
-    <FormControl variant="outlined" style={{minWidth: 260}}>
+    <FormControl variant="outlined" className={"width100"}>
         <Select
             labelId="yearCutoff-select-label"
             id="yearCutoff-select"

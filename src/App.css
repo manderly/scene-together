@@ -44,6 +44,11 @@ body {
 
 .resultsCard a {
   color: white;
+  text-decoration: none;
+}
+
+.resultsCard a:hover {
+  text-decoration: underline;
 }
 
 .resultsCard p {
@@ -61,4 +66,8 @@ body {
 
 .detailsCard {
   justify-content: center !important;
+}
+
+.width100 {
+  width: 100%;
 }
