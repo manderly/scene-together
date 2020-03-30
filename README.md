@@ -16,4 +16,12 @@ Screenshot here
 4. In Terminal, navigate to project directory and enter: ```npm install```
 5. In terminal: ```npm start```
 
+### Deploying
+To update the deployed version, make sure Heroku CLI is installed and the Heroku repo is set up as a remote.
+
+heroku buildpacks:set mars/create-react-app should already be set up
+
+All that's left to do is:
+``` git push heroku master```
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
