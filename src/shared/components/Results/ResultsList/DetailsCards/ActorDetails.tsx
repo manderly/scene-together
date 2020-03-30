@@ -43,6 +43,7 @@ const ActorDetails: React.FC<IActorDetails> = ({ id, name, showName1, showName2,
 
   const cardTitle = <ActorProfileLink id={id} name={name}/>;
 
+
   return (
     <Card className={classes.root}>
       <CardContent className="detailsCard">
@@ -56,8 +57,8 @@ const ActorDetails: React.FC<IActorDetails> = ({ id, name, showName1, showName2,
           subheader={"Actor"} // could be expanded to roles beyond acting 
         />
         <br/>
-        <Typography><b>{<ShowDetailsLink id={showID1} name={showName1} showType={showType1}/>}</b> as {characterName1}</Typography>
-        <Typography><b>{<ShowDetailsLink id={showID2} name={showName2} showType={showType2}/>}</b> as {characterName2}</Typography>
+        <Typography><b>{<ShowDetailsLink id={showID1} name={showName1} showType={showType1}/>}</b>{characterName1 !== '' ? ` as ${characterName1}` : ''}</Typography>
+        <Typography><b>{<ShowDetailsLink id={showID2} name={showName2} showType={showType2}/>}</b>{characterName2 !== '' ? ` as ${characterName2}` : ''}</Typography>
       </CardContent>
     </Card>
   )

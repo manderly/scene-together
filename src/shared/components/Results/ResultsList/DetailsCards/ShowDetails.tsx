@@ -60,8 +60,8 @@ const ShowDetails: React.FC<IShowDetails> = ({ id, showName, showDate, showType,
           subheader={cardSubheader}
         />
         <br/>
-        <Typography><b>{<ActorProfileLink id={actorID1} name={actorName1}/>}</b> as {characterName1}</Typography>
-        <Typography><b>{<ActorProfileLink id={actorID2} name={actorName2}/>}</b> as {characterName2}</Typography>
+        <Typography><b>{<ActorProfileLink id={actorID1} name={actorName1}/>}</b>{characterName1 !== '' ? ` as ${characterName1}` : ''}</Typography>
+        <Typography><b>{<ActorProfileLink id={actorID2} name={actorName2}/>}</b>{characterName1 !== '' ? ` as ${characterName1}` : ''}</Typography>
       </CardContent>
     </Card>
   )
