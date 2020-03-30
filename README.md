@@ -5,7 +5,7 @@ This is a web app I made in March 2020 to get acquainted with React. It is fully
 * Input the names of two shows and see what actors they have in common.
 * Use the "Load test data" button if you want to skip the form inputs and just see it work 
 
-The data is from [The Movie Database](http://themoviedb.org) and may look incomplete if you feed it some really obscure people or shows.
+The data is from [The Movie Database](http://themoviedb.org) and may be incomplete for obscure people or shows.
 
 ![alt text](screenshots/scene-together2020.png "Screenshot of 'Scene Together' app on desktop")
 
