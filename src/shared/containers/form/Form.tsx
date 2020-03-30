@@ -331,9 +331,9 @@ const Form: React.FC<IForm> = ({ searchType }) => {  // functional component
   const handleSubmit = (event: any) => {
     event.preventDefault();
 		if (formValidation()) {
-      if (searchType == searchTypes.byShows) {
+      if (searchType === searchTypes.byShows) {
         submitShowQuery();
-      } else if (searchType == searchTypes.byActors) {
+      } else if (searchType === searchTypes.byActors) {
         submitActorQuery();
       }
     }
