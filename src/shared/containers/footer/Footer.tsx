@@ -16,9 +16,9 @@ const Footer: React.FC = () => {
           <Typography variant="caption">
             API credit: <a href="https://www.themoviedb.org/">The Movie Database</a>
           </Typography>
-
+          <br/>
           <Typography variant="caption">
-          This product uses the TMDb API but is not endorsed or certified by TMDb. 
+          This product uses the TMDb API but is not endorsed or certified by TMDb.
           </Typography>
         </Box>
     </AppBar>
