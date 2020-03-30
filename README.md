@@ -20,7 +20,7 @@ The data is from [The Movie Database](http://themoviedb.org) and may be incomple
 ...where ```"abcdefg"``` is your TMDB API key (Get an account and API key [here](https://developers.themoviedb.org/3/getting-started/introduction).)
 
 4. In Terminal, navigate to project directory and enter: ```npm install```
-5. In terminal: ```npm start```
+5. In Terminal: ```npm start```
 
 ### Deploying
 To update the deployed version, make sure Heroku CLI is installed and the Heroku repo is set up as a remote.
