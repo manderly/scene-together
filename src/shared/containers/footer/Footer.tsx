@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
     <AppBar position="static" className={"appFooterBar"}>
       <Box p={2}>
           <Typography variant="body1">
-            © 2020 M.J.B. | <a href="https://github.com/MJGrant/scene-together">Project GitHub</a>
+            © 2021 Mandi Burley | <a href="https://github.com/manderly/scene-together">Project GitHub</a>
           </Typography>
 
           <Typography variant="caption">
