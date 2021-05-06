@@ -27,7 +27,7 @@ Fresh machine/install:
 
 1. Install Heroku CLI
 2. Set up Heroku app as a remote: https://devcenter.heroku.com/articles/git#tracking-your-app-in-git
-3. ```heroku buildpacks:set mars/create-react-app ```
+3. ```heroku buildpacks:set mars/create-react-app ``` (may already be done, this is a "once per project" thing)
 
 Subsequent deploys:
 
