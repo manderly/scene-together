@@ -23,11 +23,14 @@ The data is from [The Movie Database](http://themoviedb.org) and may be incomple
 5. In Terminal: ```npm start```
 
 ### Deploying
-To update the deployed version, make sure Heroku CLI is installed and the Heroku repo is set up as a remote.
+Fresh machine/install:
 
-heroku buildpacks:set mars/create-react-app should already be set up
+1. Install Heroku CLI
+2. Set up Heroku app as a remote: https://devcenter.heroku.com/articles/git#tracking-your-app-in-git
+3. ```heroku buildpacks:set mars/create-react-app ```
 
-All that's left to do is:
+Subsequent deploys:
+
 ``` git push heroku master```
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
